@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>个人设置</title>
+	<link rel="shortcut icon" href="fonts/favicon.ico">	
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-material-design.min.css">
+	<link rel="stylesheet" href="css/ripples.min.css">
+	<link rel="stylesheet" href="css/material-icons.css">	
+	<link rel="stylesheet" href="css/framework.css"><!--头的架设-->
+	<link rel="stylesheet" href="css/style.css">
+	<!--[if IE]>
+		<script src="../static/http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<!-- Page Preloader -->
+	<div class="animationload">
+	  <div class="loader">
+	    <svg class="circular" viewBox="25 25 50 50">
+	      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="1"/>
+	    </svg>
+	    <p>Loading...</p>
+	  </div>
+	</div>
+	<!-- Page Preloader end-->
+
+	<div id="header">
+		<ul class="header-inner">
+			<li class="menu-trigger" id="menu-trigger">
+				<div id="menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: hidden">
+					<svg width="1000px" height="1000px">
+						<path id="pathA" d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"></path>
+						<path id="pathB" d="M 300 500 L 700 500"></path>
+						<path id="pathC" d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"></path>
+					</svg>
+					<button id="menu-icon-trigger" class="menu-icon-trigger"></button>
+				</div><!-- menu-icon-wrapper-->
+				<div id="dummy" class="dummy"></div><!-- dummy -->
+			</li>
+			<li class="logo hidden-xs"><a href="index.html">13INT-1</a></li>
+			<li class="pull-right">
+				<ul class="top-menu">
+					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+					<li class="dropdown" id="info-btn">
+						<a href="javascript:void(0);">
+							<i class="material-icons">notifications</i>
+						</a>
+						<div class="dropdown-menu dropMenu pull-right" id="info">
+							<div class="lv-header">消息提醒</div>
+              <div class="lv-body">                  
+                <a class="lv-item" href="javascript:void(0);">
+                  <div class="media">
+                    <div class="pull-left">
+                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                    </div>
+                    <div class="media-body">
+                      <div class="lv-title">David Belle</div>
+                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                    </div>
+                  </div>
+                </a>
+                <a class="lv-item" href="javascript:void(0);">
+                  <div class="media">
+                    <div class="pull-left">
+                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                    </div>
+                    <div class="media-body">
+                      <div class="lv-title">David Belle</div>
+                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div style="overflow: hidden;"><a class="lv-footer" href="javascript:void(0);">全部已读</a></div>
+						</div><!--dropdown-menu end-->
+					</li>
+					<li class="hidden-xs chat-btn"><a href="javascript:void(0);" id="chat-btn"><i class="material-icons">comment</i></a></li>
+					<!-- 登陆前 -->
+					<li th:if="${#lists.isEmpty(user)}"><a th:href="@{/login}"class="login-register"><span>登录/注册</span></a></li>
+					<!-- 登陆前 end-->
+					<!-- 登录后 -->
+					<li id="top-user-btn" th:if="${not #lists.isEmpty(user)}">
+						<div class="user-headimg"><img id="headimg2" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt=""></div>
+						<div class="dropdown-menu dropMenu pull-right" id="top-user">
+              <div class="lv-header">
+                个人信息                  
+              </div>
+              <div class="lv-body">
+                <div class="myInfo">
+                  <div class="myphoto"> 
+                    <div class="userhead" data-type="update_avatar"> 
+                      <a th:href="@{/profile}" style="display:block;">
+	                      <img id="headimg3" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt="">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="myshow">
+                    <div class="myname"></div><span th:text="${user.username}"></span></div>
+                    <div class="Email"><span th:text="${user.usermail}"></span></div>
+                    <div class="signature"><span th:text="${user.saying}"></span></div>
+                    <a class="btn user-myprofile" th:href="@{/profile}">我的账户</a>
+                    <a class="btn user-setting" th:href="@{/config}">设置</a>
+                  </div>
+                </div><!--myInfo end-->
+                <form th:action="@{/logout}" method="get">
+              		<div style="overflow: hidden;"><button class="lv-footer" type="submit">退出</button></div>
+              		<!-- <a class="lv-footer" href="javascript:void(0);">退出</a> -->
+              		
+              	</form>
+						</div><!--dropdown-menu end-->
+					</li>
+					<!-- 登录后 end-->
+				</ul>
+			</li>
+		</ul>
+		<div id="top-search-wrap">
+			<div class="tsw-inner">
+				<i class="material-icons top-search-btn">search</i>
+        <form>
+        	<input type="text" name="keyword">
+        </form>
+			</div><!--tsw-inner end-->
+		</div><!--top-search-wrap end-->
+	</div>
+	<div id="main">
+		<!-- <div class="btn currenty-new c-shadow"><a href="javascript:void(0);"><i class="material-icons">add</i></a></div> -->
+		<div class="leftmenu" id="leftmenu">
+			<ul class="main-menu">
+				<li class="btn btn-default"><a th:href="@{/}"><i class="material-icons">home</i>首页</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">message</i>班级公告</a></li>
+				<li class="btn btn-default"><a th:href="@{/classPhoto}"><i class="material-icons">image</i>班级相册</a></li>
+				<li class="btn btn-default"><a th:href="@{/party}"><i class="material-icons">supervisor_account</i>班级聚会</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">supervisor_account</i>班级成员</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">file_download</i>资料分享</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">swap_horiz</i>留言反馈</a></li>
+			</ul>
+		</div><!--leftmenu end-->
+		<div class="leftmenu-mb" id="leftmenu-mb"></div><!--左菜单遮罩-->
+		<!-- <div class="chat-mb" id="chat-mb"></div> -->
+		<div class="chat hidden-xs" id="chat">
+			占位  占位  占位  占位  占位
+		</div><!--chat end-->
+		<!---------- main in here ---------->
+		<div class="container">
+			<div class="block-header">
+				<ol class="breadcrumb">
+				  <li><a href="index.html">首页</a></li>				  
+				  <li class="active">个人资料设置</li>
+				</ol>				
+				<!-- <a href="javascript:void(0)" class="btn btn-info party-launch-btn pull-right">添加照片</a> -->
+			</div><!--block-header end-->
+			
+			<div class="myContainer" th:each="user:${user}">
+				<div class="myProfile-header c-shadow">
+					<form id="uploadbanner" method="POST" enctype="multipart/form-data"> 
+					<div class="banner">
+						<div id="banner-loader" class="img-loader" style="top: 20%; display: none;">
+	    					<svg class="circular" viewBox="25 25 50 50">
+	      						<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="1"/>
+	    					</svg>
+	  					</div> 
+						<img id="bannerimg" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.backimgfile}__}" alt="">
+						<a href="#" class="change-banner"><i class="material-icons">photo_camera</i></a>
+						<input id="uploadFile2" type="file" name="file2" class="change-banner" style="opacity: 0;z-index: 10;" value="" />
+					</div>
+					</form>
+					<div class="myProfile-img-div">
+					<form id="uploadhead" method="POST" enctype="multipart/form-data">
+						<div id="head-loader" class="img-loader" style="display: none;">
+	    					<svg class="circular" viewBox="25 25 50 50">
+	      						<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="1"/>
+	    					</svg>
+	  					</div> 
+						<img id="headimg" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt="">
+						<a href="#" class="change-headimg"><i class="material-icons">photo_camera</i></a>
+					    <input id="uploadFile" type="file" name="file" class="change-headimg" style="opacity: 0;z-index: 10;" value="" />
+					</form>
+					</div><!--myProfile-img-div end-->
+					<div class="myProfile-name"><span th:text="${user.username}"></span></div>
+				</div><!--myProfile-header end-->
+				
+				<div class="col-md-6 col-sm-6 pd8">
+					<div class="card myProfile-card c-shadow">
+						<form action="" class="form-body">
+							<div class="card-header">
+                <h5><i class="material-icons">playlist_add_check</i><span>信息设置</span></h5>
+              </div><!--card-header end-->
+              <div class="card-body">
+              	<div class="form-group row">
+							    <label for="purview1" class="purview_label">手机：</label>
+							    <select id="purview1" class="select form-control">
+							      <option th:value="${user.cfphonenumber}"><span th:text="${user.cfphonenumber}"></span></option>
+							    </select>
+							  </div><!--form-group end-->
+							  <div class="form-group row">
+							    <label for="purview2" class="purview_label">地址：</label>
+							    <select id="purview2" class="select form-control">
+							      <option th:value="${user.cfaddress}"><span th:text="${user.cfaddress}"></span></option>
+							    </select>
+							  </div><!--form-group end-->
+							  <div class="form-group row">
+							    <label for="purview3" class="purview_label">生日：</label>
+							    <select id="purview3" class="select form-control">
+							      <option th:value="${user.cfbirthday}"><span th:text="${user.cfbirthday}"></span></option>
+							    </select>
+							  </div><!--form-group end-->
+							  <div class="form-group row">
+							    <label for="purview4" class="purview_label">性别：</label>
+							    <select id="purview4" class="select form-control">
+							      <option th:value="${user.cfsex}"><span th:text="${user.cfsex}"></span></option>
+							    </select>
+							  </div><!--form-group end-->
+							  <div class="form-group row">
+							    <label for="purview5" class="purview_label">爱好：</label>
+							    <select id="purview5" class="select form-control">
+							      <option th:value="${user.cfhobby}"><span th:text="${user.cfhobby}"></span></option>
+							    </select>
+							  </div><!--form-group end-->
+              </div><!--card-body end-->
+              <div class="button-label">
+	            	<button id="infoconfig" type="button" class="btn join-party">保存</button>
+	            </div>
+						</form>
+					</div><!--card end-->
+				</div><!--col-md-6 end-->
+				<div class="col-md-6 col-sm-6 pd8">
+					<div class="card myProfile-card c-shadow">
+						<form action="" class="form-body">
+							<div class="card-header">
+                <h5><i class="material-icons">notifications_active</i><span>消息提醒</span></h5>
+              </div><!--card-header end-->
+              <div class="card-body">
+							  <div class="form-group row">
+							    <label class="purview_label">接收新消息通知</label>
+								  <div class="togglebutton pull-right">
+					          <label><input id="checkbox1" th:value="${user.cfinfo}" type="checkbox"></label>
+					        </div><!--togglebutton end-->
+					      </div><!--form-group end-->
+					      <div class="form-group row">
+							    <label class="purview_label">班级相册更新提醒</label>
+								  <div class="togglebutton pull-right">
+					          <label><input id="checkbox2" th:value="${user.cfphoto}" type="checkbox"></label>
+					        </div><!--togglebutton end-->
+					      </div><!--form-group end-->
+					      <div class="form-group row">
+							    <label class="purview_label">班级公告更新提醒</label>
+								  <div class="togglebutton pull-right">
+					          <label><input id="checkbox3" th:value="${user.cfreport}" type="checkbox"></label>
+					        </div><!--togglebutton end-->
+					      </div><!--form-group end-->
+					      <div class="form-group row">
+							    <label class="purview_label">邮箱提醒</label>
+								  <div class="togglebutton pull-right">
+					          <label><input id="checkbox4" th:value="${user.cfmail}" type="checkbox"></label>
+					        </div><!--togglebutton end-->
+					      </div><!--form-group end-->
+              </div><!--card-body end-->
+              <div class="button-label">
+	            	<button id="messagenotify" type="button" class="btn join-party">保存</button>
+	            </div>
+						</form>
+					</div><!--card end-->
+				</div><!--col-md-6 end-->
+			</div><!--myContainer end-->
+		</div><!--container end-->
+
+		<!--change_head_img alert-->
+		<div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<form class="avatar-form" action="{{url('admin/upload-logo')}}" enctype="multipart/form-data" method="post">
+						<div class="modal-header">
+							<button class="close" data-dismiss="modal" type="button">&times;</button>
+							<h4 class="modal-title" id="avatar-modal-label">更改头像</h4>
+						</div>
+						<div class="modal-body">
+							<div class="avatar-body">
+								<div class="avatar-upload">
+									<input class="avatar-src" name="avatar_src" type="hidden">
+									<input class="avatar-data" name="avatar_data" type="hidden">
+									<label for="avatarInput">图片上传</label>
+									<input class="avatar-input" id="avatarInput" name="avatar_file" type="file"></div>
+								<div class="row">
+									<div class="col-md-9">
+										<div class="avatar-wrapper"></div>
+									</div>
+									<div class="col-md-3">
+										<div class="avatar-preview preview-lg"></div>
+										<div class="avatar-preview preview-md"></div>
+										<div class="avatar-preview preview-sm"></div>
+									</div>
+								</div>
+								<div class="row avatar-btns">
+									<div class="col-md-9">
+										<div class="btn-group">
+											<button class="btn" data-method="rotate" data-option="-90" type="button" title="Rotate -90 degrees"><i class="fa fa-undo"></i> 向左旋转</button>
+										</div>
+										<div class="btn-group">
+											<button class="btn" data-method="rotate" data-option="90" type="button" title="Rotate 90 degrees"><i class="fa fa-repeat"></i> 向右旋转</button>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<button class="btn btn-success btn-block avatar-save" type="submit"><i class="fa fa-save"></i> 保存修改</button>
+									</div>
+								</div>
+							</div>
+						</div>
+		  		</form>
+		  	</div>
+		  </div>
+		</div>
+		<!--change_head_img alert end-->
+
+		<!---------- main in here  end---------->
+	</div><!--main end-->
+	<div id="footer">
+		Copyright © 2016 13INT-1.TOP
+    <ul class="f-menu">
+      <li><a href="feedback.html">发送反馈</a></li>
+      <li><a href="help.html">帮助</a></li>
+      <li><a href="contact.html">联系我们</a></li>
+    </ul>
+	</div><!--footer end-->
+	
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/material.min.js"></script>
+	<script src="js/ripples.min.js"></script>
+	<script>$.material.init()</script>
+	<!--menu-icon-wrapper-->
+	<link rel="stylesheet" type="text/css" href="js/menu-icon/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="js/menu-icon/component.css" />
+	<script src="js/menu-icon/segment.min.js"></script>
+	<script src="js/menu-icon/ease.min.js"></script>
+	<script src="js/menu-icon/main.js"></script>
+	<!--menu-icon-wrapper end-->
+	<script src="js/header_main.js"></script><!--header按钮响应-->
+	<!--messenger-->
+	<link rel="stylesheet" href="js/messenger/messenger.css">
+	<link rel="stylesheet" href="js/messenger/messenger-theme-future.css">
+	<script src="js/messenger/messenger.min.js"></script>
+	<!--messenger end-->
+	<!-- dropdown -->
+	<link rel="stylesheet" href="js/dropdown/jquery.dropdown.css">
+	<script src="js/dropdown/jquery.dropdown.js"></script>
+	<script>$(document).ready(function() {$(".select").dropdown({"optionClass": "withripple"});});</script>
+	<!-- dropdown end -->
+	<!--change_head_img-->
+	<link href="js/change_head_img/cropper/cropper.min.css" rel="stylesheet">
+	<link href="js/change_head_img/sitelogo/sitelogo.css" rel="stylesheet">
+	<script src="js/change_head_img/cropper/cropper.min.js"></script>
+	<script src="js/change_head_img/sitelogo/sitelogo.js"></script>
+	<!--change_head_img end-->
+	<script src="js/every/myConfig.js"></script>
+	<script src="js/jquery.form.js"></script>
+</body>
+</html>

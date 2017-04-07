@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>班级相册</title>
+	<link rel="shortcut icon" href="fonts/favicon.ico">	
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-material-design.min.css">
+	<link rel="stylesheet" href="css/ripples.min.css">
+	<link rel="stylesheet" href="css/material-icons.css">	
+	<link rel="stylesheet" href="css/framework.css"><!--头的架设-->
+	<link rel="stylesheet" href="css/style.css">
+	<!--[if IE]>
+		<script src="../static/http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<!-- Page Preloader -->
+	<div class="animationload">
+	  <div class="loader">
+	    <svg class="circular" viewBox="25 25 50 50">
+	      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="1"/>
+	    </svg>
+	    <p>Loading...</p>
+	  </div>
+	</div>
+	<!-- Page Preloader end-->
+
+		<div id="header">
+		<ul class="header-inner">
+			<li class="menu-trigger" id="menu-trigger">
+				<div id="menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: hidden">
+					<svg width="1000px" height="1000px">
+						<path id="pathA" d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"></path>
+						<path id="pathB" d="M 300 500 L 700 500"></path>
+						<path id="pathC" d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"></path>
+					</svg>
+					<button id="menu-icon-trigger" class="menu-icon-trigger"></button>
+				</div><!-- menu-icon-wrapper-->
+				<div id="dummy" class="dummy"></div><!-- dummy -->
+			</li>
+			<li class="logo hidden-xs"><a th:href="@{/}">13INT-1</a></li>
+			<li class="pull-right">
+				<ul class="top-menu">
+					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+					<li class="dropdown" id="info-btn">
+						<a href="javascript:void(0);">
+							<i class="material-icons">notifications</i>
+						</a>
+						<div class="dropdown-menu dropMenu pull-right" id="info">
+							<div class="lv-header">消息提醒</div>
+              <div class="lv-body">                  
+                <a class="lv-item" href="javascript:void(0);">
+                  <div class="media">
+                    <div class="pull-left">
+                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                    </div>
+                    <div class="media-body">
+                      <div class="lv-title">David Belle</div>
+                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                    </div>
+                  </div>
+                </a>
+                <a class="lv-item" href="javascript:void(0);">
+                  <div class="media">
+                    <div class="pull-left">
+                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                    </div>
+                    <div class="media-body">
+                      <div class="lv-title">David Belle</div>
+                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div style="overflow: hidden;"><a class="lv-footer" href="javascript:void(0);">所有消息</a></div>
+						</div><!--dropdown-menu end-->
+					</li>
+					<li class="hidden-xs chat-btn"><a href="javascript:void(0);" id="chat-btn"><i class="material-icons">comment</i></a></li>
+					<!-- <li><a href="login.html" class="login-register"><span>登录/注册</span></a></li> -->
+					<!-- 登陆前 -->
+					<li th:if="${#lists.isEmpty(user)}"><a th:href="@{/login}"class="login-register"><span>登录/注册</span></a></li>
+					<!-- 登陆前 end-->
+					<!-- 登录后 -->
+					<li id="top-user-btn" th:if="${not #lists.isEmpty(user)}">
+						<div class="user-headimg"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt=""></div>
+						<div class="dropdown-menu dropMenu pull-right" id="top-user">
+              <div class="lv-header">
+                个人信息                  
+              </div>
+              <div class="lv-body">
+                <div class="myInfo">
+                  <div class="myphoto"> 
+                    <div class="userhead" data-type="update_avatar"> 
+                      <a th:href="@{/profile}" style="display:block;">
+	                      <img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt="">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="myshow">
+                    <div class="myname"></div><span th:text="${user.username}"></span></div>
+                    <div class="Email"><span th:text="${user.usermail}"></span></div>
+                    <div class="signature"><span th:text="${user.saying}"></span></div>
+                    <a class="btn user-myprofile" th:href="@{/profile}">我的账户</a>
+                    <a class="btn user-setting" th:href="@{/config}">设置</a>
+                  </div>
+                </div><!--myInfo end-->
+                <form th:action="@{/logout}" method="get">
+              		<div style="overflow: hidden;"><button class="lv-footer" type="submit">退出</button></div>
+              		<!-- <a class="lv-footer" href="javascript:void(0);">退出</a> -->
+              		
+              	</form>
+						</div><!--dropdown-menu end-->
+					</li>
+					<!-- 登录后 end-->
+				</ul>
+			</li>
+		</ul>
+		<div id="top-search-wrap">
+			<div class="tsw-inner">
+				<i class="material-icons top-search-btn">search</i>
+        <form>
+        	<input type="text" name="keyword">
+        </form>
+			</div><!--tsw-inner end-->
+		</div><!--top-search-wrap end-->
+	</div>
+	<div id="main">
+		<div class="btn currenty-new c-shadow"><a href="javascript:void(0);"><i class="material-icons">add</i></a></div>
+		<div class="leftmenu" id="leftmenu">
+			<ul class="main-menu">
+				<li class="btn btn-default"><a th:href="@{/}"><i class="material-icons">home</i>首页</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">message</i>班级公告</a></li>
+				<li class="btn btn-default"><a th:href="@{/classPhoto}"><i class="material-icons">image</i>班级相册</a></li>
+				<li class="btn btn-default"><a th:href="@{/party}"><i class="material-icons">supervisor_account</i>班级聚会</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">supervisor_account</i>班级成员</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">file_download</i>资料分享</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">swap_horiz</i>留言反馈</a></li>
+			</ul>
+		</div><!--leftmenu end-->
+		<div class="leftmenu-mb" id="leftmenu-mb"></div><!--左菜单遮罩-->
+		<!-- <div class="chat-mb" id="chat-mb"></div> -->
+		<div class="chat hidden-xs" id="chat">
+			占位  占位  占位  占位  占位
+		</div><!--chat end-->
+		<!---------- main in here ---------->
+		<div class="container">
+			<div class="block-header">
+				<ol class="breadcrumb">
+				  <li><a th:href="@{/}">首页</a></li>				  
+				  <li class="active">班级相册</li>
+				</ol>				
+				<a href="javascript:void(0)" class="btn btn-info party-launch-btn pull-right">添加照片</a>
+			</div><!--block-header end-->
+
+			<div class="currency-form-holder" th:each="post:${user}">
+				<div id="party-form">
+					<div class="party-form c-shadow" >
+						<div class="form-header">
+							<div class="tvh-user pull-left">
+	              <img class="img-responsive" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${post.headimgfile}__}" alt="">
+	            </div>
+	            <div class="media-body p-t-5">
+	              <strong class="col-md-6 col-sm-6 col-xs-6 text-center">来自：<span th:text="${post.username}"></span></strong>
+	              <strong class="col-md-6 col-sm-6 col-xs-6 text-center" id="p_time">发表时间：<span th:text="${date}"></span></strong>
+	            </div>                    
+							<div class="party-menu">
+							  <i class="material-icons currency-form-close">close</i>
+							</div><!--party-menu end-->
+						</div><!--form-header end-->
+						<div class="form-body">
+							<form action="" id="form-party">
+								<div class="form-group label-floating row">
+									<div class="col-md-12 plr0">
+									 	<label class="control-label" for="title">标题：</label>
+									  <input class="form-control" id="title" type="text">
+									</div>
+								</div><!--form-group end-->
+								<div class="form-group label-floating row">
+		              <div class="col-md-12 plr0">
+		                <label for="details" class="control-label">备注：</label>
+		                <textarea class="form-control" rows="2" id="details"></textarea>
+		                <span class="help-block">一些关于照片的详情，或者你也可以空着。</span>
+		              </div>
+		            </div><!--form-group end-->
+		            <div class="form-group row">
+                  <div class="col-md-12 plr0">
+                  	<input id="file" type="file" name="files" multiple class="file btn"  placeholder="照片">
+                  </div>
+                </div>
+		            <div class="button-label">
+		            	<button type="reset" class="btn join-cancel currency-form-close">取消</button>
+		            	<button type="button" class="btn join-party">提交</button>
+		            </div><!--button-label end-->
+							</form>
+						</div><!--form-body end-->
+					</div><!--party-form end-->
+				</div>
+			</div><!--currency-form-holder end-->
+
+			<div class="photo-walls content">
+				<div class="grid" >
+					<!--<div class="grid__item" data-size="1000x1000">
+						<a href="images/classPhoto/4.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/4.jpg" alt="" />
+							<div class="description description--grid">
+								<h3>班级相册</h3>
+								<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+									<em>&mdash;&mdash; 林晓鑫 <span>2016.10.20 23:00</span></em>
+								</p>								
+								<div class="details datailsGood">
+									<ul>
+										<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+										<li><div class="img-div"><img src="images/1.jpg" alt=""></div></li>
+										<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+										<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+										<li><div class="img-div"><img src="images/1.jpg" alt=""></div></li>
+										<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+										<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+										<li><div class="img-div"><img src="images/1.jpg" alt=""></div></li>
+										<li>等29个赞</li>
+									</ul>
+									<div class="dropdown party-menu photo-operate">
+									  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"> 
+									    <i class="material-icons">more_vert</i>
+									  </button>
+									  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+									    <li class="text-center feel-Good">点赞</li>
+									    <li class="text-center want-Comment">评论</li>
+									  </ul>
+									</div>
+								</div>
+								<div class="details datailsComment">
+									<div class="form-group want-Comment-input">
+					        	<input type="text" class="form-control" id="Comment" placeholder="评论：">
+						        <button class="btn">发送</button>
+							    </div>
+									<ul>
+										<li><span>林晓鑫：</span>Bigbang团队成员TOP，负责rap，演员，歌星，颜值实力共存。</li>
+										<li><span>张静：</span>我的偶像，怎么看都帅。</li>
+									</ul>
+								</div>
+							</div>description end
+						</a>
+					</div>grid__item end -->
+					<div class="grid__item" data-size="1000x1000" th:each="listphoto:${list}">
+						<a th:href="@{http://oihey4yi1.bkt.clouddn.com/__${listphoto.address}__}" class="img-wrap c-shadow"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${listphoto.address}__}" alt="" />
+							<div class="description description--grid">
+								<h3 th:text="${listphoto.title}"></h3>
+								<p th:text="${listphoto.remarks}">
+									
+								</p>
+								<em>&mdash;&mdash; <span th:text="${listphoto.user_name}"></span></em>
+								<div class="details">
+									<ul>
+										<li><span th:text="${listphoto.p_time}"></span></li>
+										<li><span>105KB</span></li>
+									</ul>
+								</div>
+							</div>
+						</a>
+					</div>
+				<!-- 	<div class="grid__item" data-size="1000x1000">
+						<a href="images/classPhoto/14.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/14.jpg" alt="" />
+							<div class="description description--grid">
+								<h3>班级相册</h3>
+								<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+									<em>&mdash;&mdash; 林晓鑫</em>
+								</p>
+								<div class="details">
+									<ul>
+										<li><span>2016.10.20 23:00</span></li>
+										<li><span>105KB</span></li>
+									</ul>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="grid__item" data-size="1000x1000">
+						<a href="images/classPhoto/5.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/5.jpg" alt="" />
+							<div class="description description--grid">
+								<h3>班级相册</h3>
+								<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+									<em>&mdash;&mdash; 林晓鑫</em>
+								</p>
+								<div class="details">
+									<ul>
+										<li><span>2016.10.20 23:00</span></li>
+										<li><span>105KB</span></li>
+									</ul>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="grid__item" data-size="1000x1000">
+						<a href="images/classPhoto/9.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/9.jpg" alt="" />
+							<div class="description description--grid">
+								<h3>班级相册</h3>
+								<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+									<em>&mdash;&mdash; 林晓鑫</em>
+								</p>
+								<div class="details">
+									<ul>
+										<li><span>2016.10.20 23:00</span></li>
+										<li><span>105KB</span></li>
+									</ul>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="grid__item" data-size="1000x1000">
+						<a href="images/classPhoto/1.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/1.jpg" alt="" />
+							<div class="description description--grid">
+								<h3>班级相册</h3>
+								<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+									<em>&mdash;&mdash; 林晓鑫</em>
+								</p>
+								<div class="details">
+									<ul>
+										<li><span>2016.10.20 23:00</span></li>
+										<li><span>105KB</span></li>
+									</ul>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="grid__item" data-size="1000x1000">
+						<a href="images/classPhoto/7.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/7.jpg" alt="" />
+							<div class="description description--grid">
+								<h3>班级相册</h3>
+								<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+									<em>&mdash;&mdash; 林晓鑫</em>
+								</p>
+								<div class="details">
+									<ul>
+										<li><span>2016.10.20 23:00</span></li>
+										<li><span>105KB</span></li>
+									</ul>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="grid__item" data-size="1000x1000">
+						<a href="images/classPhoto/10.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/10.jpg" alt="" />
+							<div class="description description--grid">
+								<h3>班级相册</h3>
+								<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+									<em>&mdash;&mdash; 林晓鑫</em>
+								</p>
+								<div class="details">
+									<ul>
+										<li><span>2016.10.20 23:00</span></li>
+										<li><span>105KB</span></li>
+									</ul>
+								</div>
+							</div>
+						</a>
+					</div> -->
+					
+				</div><!--grid end-->
+				<div class="preview">
+					<button class="action action--close"><i class="material-icons">close</i><span class="text-hidden">Close</span></button>
+					<div class="description description--preview"></div>
+				</div><!--preview end-->
+			</div><!--photo-walls end-->
+		</div><!--container end-->
+
+		<!---------- main in here  end---------->
+	</div><!--main end-->
+	<div id="footer">
+		Copyright © 2016 13INT-1.TOP
+    <ul class="f-menu">
+        <li><a href="#">发送反馈</a></li>
+        <li><a href="#">帮助</a></li>
+        <li><a href="#">联系我们</a></li>
+    </ul>
+	</div><!--footer end-->
+	
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/material.min.js"></script>
+	<script src="js/ripples.min.js"></script>
+	<script>$.material.init()</script>
+	<!--menu-icon-wrapper-->
+	<link rel="stylesheet" type="text/css" href="js/menu-icon/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="js/menu-icon/component.css" />
+	<script src="js/menu-icon/segment.min.js"></script>
+	<script src="js/menu-icon/ease.min.js"></script>
+	<script src="js/menu-icon/main.js"></script>
+	<!--menu-icon-wrapper end-->
+	<script src="js/header_main.js"></script><!--header按钮响应-->
+	<!--messenger-->
+	<link rel="stylesheet" href="js/messenger/messenger.css">
+	<link rel="stylesheet" href="js/messenger/messenger-theme-future.css">
+	<script src="js/messenger/messenger.min.js"></script>
+	<!--messenger end-->
+	<!--照片瀑布-->
+	<link rel="stylesheet" type="text/css" href="js/classPhoto/classPhoto.css"/>
+	<script src="js/classPhoto/modernizr-custom.js"></script>
+	<script src="js/classPhoto/imagesloaded.pkgd.min.js"></script>
+	<script src="js/classPhoto/masonry.pkgd.min.js"></script>
+	<script src="js/classPhoto/classie.js"></script>
+	<script src="js/classPhoto/main.js"></script>
+	<script id="part_classphoto" type="text/html"> 
+	<div class="grid__item" data-size="1000x1000">
+	<a href="[address]" class="img-wrap c-shadow">
+	<img src="[address]" alt="" />
+		<div class="description description--grid">
+			<h3>[title]</h3>
+			<p>
+				[remarks]
+				<em>&mdash;&mdash; 林晓鑫</em>
+			</p>
+			<div class="details">
+				<ul>
+					<li><span>[p_time]</span></li>
+					<li><span>105KB</span></li>
+				</ul>
+			</div>
+		</div>
+	 </a>
+	</div>	
+	</script>	
+	<!--照片瀑布 end-->
+	<!--bootstrap多图上传预览-->
+	<link href="js/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />	
+	<script src="js/fileinput/fileinput.min.js" type="text/javascript"></script>
+	<!--bootstrap多图上传预览 end-->
+	<!--bootstrap时间控件-->
+	<link rel="stylesheet" href="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
+	<script src="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+	<script src="js/every/photo.js"></script>
+</body>
+</html>

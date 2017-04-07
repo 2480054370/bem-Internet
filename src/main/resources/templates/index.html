@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>New revolution</title>
+	<link rel="shortcut icon" href="fonts/favicon.ico">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-material-design.min.css">
+	<link rel="stylesheet" href="css/ripples.min.css">
+	<link rel="stylesheet" href="css/material-icons.css">	
+	<link rel="stylesheet" href="css/framework.css"><!--头的架设-->
+	<link rel="stylesheet" href="css/style.css">
+	<!--[if IE]>
+		<script src="../static/http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<!-- Page Preloader -->
+	<div class="animationload">
+	  <div class="loader">
+	    <svg class="circular" viewBox="25 25 50 50">
+	      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="1"/>
+	    </svg>
+	    <p>Loading...</p>
+	  </div>
+	</div>
+	<!-- Page Preloader end-->
+
+	<div id="header" class="headroom headroom--unpinned">
+		<ul class="header-inner">
+			<li class="menu-trigger" id="menu-trigger">
+				<div id="menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: hidden">
+					<svg width="1000px" height="1000px">
+						<path id="pathA" d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"></path>
+						<path id="pathB" d="M 300 500 L 700 500"></path>
+						<path id="pathC" d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"></path>
+					</svg>
+					<button id="menu-icon-trigger" class="menu-icon-trigger"></button>
+				</div><!-- menu-icon-wrapper-->
+				<div id="dummy" class="dummy"></div><!-- dummy -->
+			</li>
+			<li class="logo hidden-xs"><a href="javascript:void(0);">13INT-1</a></li>
+			<li class="pull-right">
+				<ul class="top-menu">
+					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+					<li class="dropdown" id="info-btn">
+						<a href="javascript:void(0);">
+							<i class="material-icons">notifications</i><span class="tmn-counts">2</span>
+						</a>
+						<div class="dropdown-menu dropMenu pull-right" id="info">
+							<div class="lv-header">消息提醒</div>
+              <div class="lv-body">                  
+                <a class="lv-item" href="javascript:void(0);">
+                  <div class="media">
+                    <div class="pull-left">
+                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                    </div>
+                    <div class="media-body">
+                      <div class="lv-title">David Belle</div>
+                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                    </div>
+                  </div>
+                </a>
+                <a class="lv-item" href="javascript:void(0);">
+                  <div class="media">
+                    <div class="pull-left">
+                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                    </div>
+                    <div class="media-body">
+                      <div class="lv-title">David Belle</div>
+                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div style="overflow: hidden;"><a class="lv-footer" href="javascript:void(0);">全部已读</a></div>
+						</div><!--dropdown-menu end-->
+					</li>
+					<li class="hidden-xs chat-btn"><a href="javascript:void(0);" id="chat-btn"><i class="material-icons">comment</i></a></li>
+					<!-- 登陆前 -->
+					<li th:if="${#lists.isEmpty(user)}"><a th:href="@{/login}"class="login-register"><span>登录/注册</span></a></li>
+					<!-- 登陆前 end-->
+					<!-- 登录后 -->
+					<li id="top-user-btn" th:if="${not #lists.isEmpty(user)}">
+						<div class="user-headimg"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt=""></div>
+						<div class="dropdown-menu dropMenu pull-right" id="top-user">
+              <div class="lv-header">
+                个人信息                  
+              </div>
+              <div class="lv-body">
+                <div class="myInfo">
+                  <div class="myphoto"> 
+                    <div class="userhead" data-type="update_avatar"> 
+                      <a th:href="@{/profile}" style="display:block;">
+	                      <img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt="">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="myshow">
+                    <div class="myname"></div><span th:text="${user.username}"></span></div>
+                    <div class="Email"><span th:text="${user.usermail}"></span></div>
+                    <div class="signature"><span th:text="${user.saying}"></span></div>
+                    <a class="btn user-myprofile" th:href="@{/profile}">我的账户</a>
+                    <a class="btn user-setting" th:href="@{/config}">设置</a>
+                  </div>
+                </div><!--myInfo end-->
+                <form th:action="@{/logout}" method="get">
+              		<div style="overflow: hidden;"><button class="lv-footer" type="submit">退出</button></div>
+              		<!-- <a class="lv-footer" href="javascript:void(0);">退出</a> -->
+              		
+              	</form>
+						</div><!--dropdown-menu end-->
+					</li>
+					<!-- 登录后 end-->
+				</ul>
+			</li>
+		</ul>
+		<div id="top-search-wrap">
+			<div class="tsw-inner">
+				<i class="material-icons top-search-btn">search</i>
+        <form>
+        	<input type="text" name="keyword">
+        </form>
+			</div><!--tsw-inner end-->
+		</div><!--top-search-wrap end-->
+	</div>
+	<div id="main">
+		<div class="leftmenu" id="leftmenu">
+			<ul class="main-menu">
+				<li class="btn btn-default"><a th:href="@{/}"><i class="material-icons">home</i>首页</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">message</i>班级公告</a></li>
+				<li class="btn btn-default"><a th:href="@{/classPhoto}"><i class="material-icons">image</i>班级相册</a></li>
+				<li class="btn btn-default"><a th:href="@{/party}"><i class="material-icons">supervisor_account</i>班级聚会</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">supervisor_account</i>班级成员</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">file_download</i>资料分享</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">swap_horiz</i>留言反馈</a></li>
+			</ul>
+		</div><!--leftmenu end-->
+		<div class="leftmenu-mb" id="leftmenu-mb"></div><!--左菜单遮罩-->
+		<!-- <div class="chat-mb" id="chat-mb"></div> -->
+		<div class="chat hidden-xs" id="chat">
+			占位  占位  占位  占位  占位
+		</div><!--chat end-->
+		<!---------- main in here ---------->
+		<div class="container">
+			<div class="col-md-4 pd8 m-plr-16">
+				<div class="slideTxtBox">
+					<div class="hd"></div>
+					<div class="bd">
+						<ul>
+							<a href="#" class="userMessage-action"><div class="userMessage c-shadow"><!--用户留言-->
+								<div class="blog-article">
+									<div class="head">
+										<h3 class="blog-article-meta">
+											<span class="blog-article-meta-type">林晓鑫</span>
+											<time class="blog-article-meta-pubdate">2016.11.02 12:20</time>
+											<span class="blog-article-meta-read-time">6个人觉得很赞</span>
+										</h3>
+									</div><!--head end-->
+									<div class="blog-article-content">我爱学习，学习使我快乐！我爱工作，工作使我富裕！我爱锻炼，锻炼使我健康！</div>
+									<div class="blog-article-author blog-article-author-column-3">
+										<span class="blog-article-author-avatar-wrapper">
+											<img class="blog-article-author-avatar" alt="" src="images/1.jpg" height="40" width="40">
+										</span>
+										<div class="blog-article-author-infos">
+												<span class="blog-article-author-item blog-article-author-name">----来自同学的留言</span>
+										</div>
+									</div>
+								</div><!--blog-article end-->
+							</div></a><!--userMessage end-->
+						</ul>
+						<ul>
+							<a href="#" class="userMessage-action"><div class="userMessage c-shadow"><!--用户留言-->
+								<div class="blog-article">
+									<div class="head">
+										<h3 class="blog-article-meta">
+											<span class="blog-article-meta-type">管理员</span>
+											<time class="blog-article-meta-pubdate">2016.11.02 12:20</time>
+											<span class="blog-article-meta-read-time">12个人觉得很赞</span>
+										</h3>
+									</div><!--head end-->
+									<div class="blog-article-content">基于material design for bootstrap而开发，一个真正意义上的学习成果，一个属于我们的班级网站。</div>
+									<div class="blog-article-author blog-article-author-column-3">
+										<span class="blog-article-author-avatar-wrapper">
+											<img class="blog-article-author-avatar" alt="" src="images/1.jpg" height="40" width="40">
+										</span>
+										<div class="blog-article-author-infos">
+												<span class="blog-article-author-item blog-article-author-name">----来自同学的留言</span>
+										</div>
+									</div>
+								</div><!--blog-article end-->
+							</div></a><!--userMessage end-->
+						</ul>
+						<ul>
+							<a href="#" class="userMessage-action"><div class="userMessage c-shadow"><!--用户留言-->
+								<div class="blog-article">
+									<div class="head">
+										<h3 class="blog-article-meta">
+											<span class="blog-article-meta-type">Trends</span>
+											<time class="blog-article-meta-pubdate">2016.11.02 12:20</time>
+											<span class="blog-article-meta-read-time">2个人觉得很赞</span>
+										</h3>
+									</div><!--head end-->
+									<div class="blog-article-content">Why Context is King with Sitecore’s Experience Platform</div>
+									<div class="blog-article-author blog-article-author-column-3">
+										<span class="blog-article-author-avatar-wrapper">
+											<img class="blog-article-author-avatar" alt="" src="images/1.jpg" height="40" width="40">
+										</span>
+										<div class="blog-article-author-infos">
+												<span class="blog-article-author-item blog-article-author-name">----来自同学的留言</span>
+										</div>
+									</div>
+								</div><!--blog-article end-->
+							</div></a><!--userMessage end-->
+						</ul>
+					</div><!--bd-->
+				</div><!--slideTxtBox-->
+			</div><!--col-md-4 end-->
+
+			<div class="col-md-6 pd8 m-plr-16">
+				<a th:href="@{party}" class="party-action"><div class="party c-shadow"><!--班级聚会-->
+					<img src="images/party.jpg" alt="" class="party-bg">
+					<div class="info">Connecting you with us</div>
+					<div class="more">
+						<p>veiw work</p>
+						<p><img src="images/view-work.png" alt=""></p>
+					</div><!--more end-->
+					<div class="mark"></div>
+				</a></div><!--party end-->
+			</div><!--col-md-6 end-->
+
+			<div class="col-md-8 pd8 m-plr-16 m-pull-right">
+				<div class="classPhoto c-shadow"><!--班级相册-->
+					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+					  <!-- Indicators -->
+					  <ol class="carousel-indicators">
+					    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+					    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+					    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+					  </ol>
+					  <!-- Wrapper for slides -->
+					  <div class="carousel-inner" role="listbox">
+					    <div class="item active">
+					      <a th:href="@{/classPhoto}"><img src="images/cp-index1.jpeg" alt=""></a>
+					      <div class="carousel-caption"></div><!--图片介绍-->
+					    </div>
+					    <div class="item">
+					      <a th:href="@{/classPhoto}"><img src="images/cp-index2.jpg" alt=""></a>
+					      <div class="carousel-caption"></div>
+					    </div>
+					    <div class="item">
+					      <a th:href="@{/classPhoto}"><img src="images/cp-index3.jpg" alt=""></a>
+					      <div class="carousel-caption"></div>
+					    </div>
+					  </div><!--carousel-inner end-->
+						<!-- <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+					    <span class="glyphicon glyphicon-chevron-left"></span>
+					    <span class="sr-only">Previous</span>
+					  </a>
+					  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+					    <span class="glyphicon glyphicon-chevron-right"></span>
+					    <span class="sr-only">Next</span>
+					  </a> -->
+					</div><!--carousel end-->
+				</div><!--classPhoto end-->
+			</div><!--col-md-8 end-->
+
+			<div class="col-md-4 pd8 m-plr-16 pull-right">
+				<a href="#" class="classNotice-action"><div class="classNotice c-shadow"><!--班级公告-->
+					<div class="notice-img-div"><img src="images/work-thumbs-mds.jpg" alt=""></div>
+					<div class="NoticeInfo">
+						<div class="hd"></div>
+						<div class="bd">
+							<ul>
+								<div class="info">
+									<div class="title">第二届全国创客周活动</div>
+									<div class="dec">时间：10月12日至18日 地点：广东省深圳市南山科技园、深圳湾创业广场。本次国际创客周如火如荼地开展中，现场四周道路被警卫封锁，开辟了长宽一千平米左右的场地，可容纳几万人次，可谓是一场空前的创客作品展览会。</div>
+								</div><!--info end-->
+							</ul>
+							<ul>
+								<div class="info">
+									<div class="title">广州小制作、小发明决赛</div>
+									<div class="dec">12月13日，由广东省职业培训和技工教育协会主办的第二届广东省技工院校科技小发明小制作比赛决赛，在广州市技师学院举行，我校电子信息技术系嵌入式创客实践室入围决赛的3个学生作品全部获奖。</div>
+								</div><!--info end-->
+							</ul>
+							<ul>
+								<div class="info">
+									<div class="title">世界技能大赛平面设计技术项目全国集训动员会在我院召开</div>
+									<div class="dec">第44届世界技能大赛平面设计技术项目全国集训动员会在我院召开，动员会由王德副院长主持。</div>
+								</div><!--info end-->
+							</ul>
+						</div><!--bd end-->
+					</div><!--NoticeInfo end-->
+					<div class="more">View</div>
+				</div></a><!--classNotice end-->
+			</div><!--col-md-4 end-->
+
+			<div class="col-md-2 pd8 m-plr-16 flip-angle m-h-247 m-clear m-pb-0">
+				<a href="#" class="dataShare-action flip-action-X"><!--资料分享-->
+					<div class="flip-card c-shadow clear">
+						<div class="flip dataShare"></div>
+						<div class="flip-info dataShare flip-method-X">资料分享</div>
+					</div><!--dataShare-card end-->
+				</a><!--dataShare end-->
+
+				<a href="#" class="member-action pd8 m-plr-16 flip-action-X"><!--班级成员-->
+					<div class="flip-card c-shadow">
+						<div class="flip member"></div>
+						<div class="flip-info member flip-method-X">班级成员</div>
+					</div><!--flip-card end-->
+				</a><!--member-action end-->
+			</div><!--col-md-2 end-->
+
+			<div class="col-md-6 pd8 m-plr-16 m-pull-right">
+				<a href="#" class="discussion-action"><div class="discussion c-shadow"><!--话题讨论-->
+					<img src="images/21.jpg" alt="" class="discussion-bg">
+					<div class="title-frame">
+						<p class="cn">话题讨论</p>
+						<p class="en">Topic discussion</p>
+					</div><!--title-frame end-->
+					<div class="title-frame title-frame-copy">
+						<p>We are family.</p>
+						<p>So we're discussing it together.</p>
+					</div>
+					<div class="mark"></div>
+				</div></a><!--discussion end-->
+			</div><!--col-md-6 end-->
+
+			<div class="col-md-2 pd8 m-plr-16 flip-angle">
+				<a th:href="@{chatRoom}" class="chatRoom-action flip-action-Y"><!--聊天室-->
+					<div class="flip-card c-shadow">
+						<div class="flip chatRoom"></div>
+						<div class="flip-info chatRoom flip-method-Y">聊天室</div>
+					</div><!--flip-card end-->
+				</a><!--chatRoom-action end-->
+			</div><!--col-md-2 end-->			
+		</div><!--container end-->
+
+		<!---------- main in here  end---------->
+	</div><!--main end-->
+	<div id="footer">
+		Copyright © 2016 13INT-1.TOP
+    <ul class="f-menu">
+      <li><a href="#">发送反馈</a></li>
+      <li><a href="#">帮助</a></li>
+      <li><a href="#">联系我们</a></li>
+    </ul>
+	</div><!--footer end-->
+	
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/material.min.js"></script>
+	<script src="js/ripples.min.js"></script>
+	<script>$.material.init()</script>
+	<!--menu-icon-wrapper-->
+	<link rel="stylesheet" type="text/css" href="js/menu-icon/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="js/menu-icon/component.css" />
+	<script src="js/menu-icon/segment.min.js"></script>
+	<script src="js/menu-icon/ease.min.js"></script>
+	<script src="js/menu-icon/main.js"></script>
+	<!--menu-icon-wrapper end-->
+	<script src="js/header_main.js"></script><!--header按钮响应-->
+	<!--messenger-->
+	<link rel="stylesheet" href="js/messenger/messenger.css">
+	<link rel="stylesheet" href="js/messenger/messenger-theme-future.css">
+	<script src="js/messenger/messenger.min.js"></script>
+	<!--messenger end-->
+	<script>$('.carousel').carousel({ interval: 4000 })</script>
+	<script src="js/jquery.SuperSlide.2.1.1.js"></script>
+	<script>
+		jQuery(".slideTxtBox").slide({effect:"top",autoPlay:true,delayTime:2000});
+		jQuery(".NoticeInfo").slide({effect:"fold",autoPlay:true});
+	</script>
+</body>
+</html>

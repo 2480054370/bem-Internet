@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>New revolution</title>
+	<link rel="shortcut icon" th:href="@{favicon.ico}">
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{css/bootstrap-material-design.min.css}">
+	<link rel="stylesheet" th:href="@{css/ripples.min.css}">
+	<link rel="stylesheet" th:href="@{css/material-icons.css}">	
+	<link rel="stylesheet" th:href="@{css/framework.css}"><!--头的架设-->
+	<link rel="stylesheet" th:href="@{css/style.css}">
+	<!--[if IE]>
+		<script src="../static/http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<!-- Page Preloader -->
+	<div class="animationload">
+	  <div class="loader">
+	    <svg class="circular" viewBox="25 25 50 50">
+	      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="1"/>
+	    </svg>
+	    <p>Loading...</p>
+	  </div>
+	</div>
+	<!-- Page Preloader end-->
+
+		<div id="header">
+		<ul class="header-inner">
+			<li class="menu-trigger" id="menu-trigger">
+				<div id="menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: hidden">
+					<svg width="1000px" height="1000px">
+						<path id="pathA" d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"></path>
+						<path id="pathB" d="M 300 500 L 700 500"></path>
+						<path id="pathC" d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"></path>
+					</svg>
+					<button id="menu-icon-trigger" class="menu-icon-trigger"></button>
+				</div><!-- menu-icon-wrapper-->
+				<div id="dummy" class="dummy"></div><!-- dummy -->
+			</li>
+			<li class="logo hidden-xs"><a href="javascript:void(0);">13INT-1</a></li>
+			<li class="pull-right">
+				<ul class="top-menu">
+					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+					<li class="dropdown" id="info-btn" name="info-login"><a href="javascript:void(0);"><i class="material-icons">notifications</i></a>
+						<div class="dropdown-menu dropMenu pull-right" id="info">
+							 <div class="lv-header">
+                  消息提醒                  
+              </div>
+              <div class="lv-body">                  
+                <a class="lv-item" href="javascript:void(0);">
+                    <div class="media">
+                        <div class="pull-left">
+                            <img class="lv-img-sm" src="images/1.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lv-title">David Belle</div>
+                            <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                        </div>
+                    </div>
+                </a>
+                <a class="lv-item" href="javascript:void(0);">
+                    <div class="media">
+                        <div class="pull-left">
+                            <img class="lv-img-sm" src="images/1.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lv-title">David Belle</div>
+                            <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                        </div>
+                    </div>
+                </a>
+              </div>
+              <div style="overflow: hidden;"><a class="lv-footer" href="javascript:void(0);">所有消息</a></div>
+						</div><!--dropdown-menu end-->
+					</li>
+					<li class="hidden-xs chat-btn"><a href="javascript:void(0);" id="chat-btn"><i class="material-icons">comment</i></a></li>
+					<!-- 登陆前 -->
+					<li th:if="${#lists.isEmpty(users)}"><a th:href="@{/login}"class="login-register"><span>登录/注册</span></a></li>
+					<!-- 登陆前 end-->
+					<!-- 登录后 -->
+					<li id="top-user-btn" th:if="${not #lists.isEmpty(users)}">
+						<div class="user-headimg"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${users.headimgfile}__}" alt=""></div>
+						<div class="dropdown-menu dropMenu pull-right" id="top-user">
+              <div class="lv-header">
+                个人信息                  
+              </div>
+              <div class="lv-body">
+                <div class="myInfo">
+                  <div class="myphoto"> 
+                    <div class="userhead" data-type="update_avatar"> 
+                      <a th:href="@{/profile}" style="display:block;">
+	                      <img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${users.headimgfile}__}" alt="">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="myshow">
+                    <div class="myname"></div><span th:text="${users.username}"></span></div>
+                    <div class="Email"><span th:text="${users.usermail}"></span></div>
+                    <div class="signature"><span th:text="${users.saying}"></span></div>
+                    <a class="btn user-myprofile" th:href="@{/profile}">我的账户</a>
+                    <a class="btn user-setting" th:href="@{/config}">设置</a>
+                  </div>
+                </div><!--myInfo end-->
+                <form th:action="@{/logout}" method="get">
+              		<div style="overflow: hidden;"><button class="lv-footer" type="submit">退出</button></div>
+              		<!-- <a class="lv-footer" href="javascript:void(0);">退出</a> -->
+              		
+              	</form>
+						</div><!--dropdown-menu end-->
+					</li>
+					<!-- 登录后 end-->
+				</ul>
+			</li>
+		</ul>
+		<div id="top-search-wrap">
+			<div class="tsw-inner">
+				<i class="material-icons top-search-btn">search</i>
+        <form>
+        	<input type="text" name="keyword">
+        </form>
+			</div><!--tsw-inner end-->
+		</div><!--top-search-wrap end-->
+	</div>
+	<div id="main">
+		<div class="leftmenu" id="leftmenu">
+			<ul class="main-menu">
+				<li class="btn btn-default"><a th:href="@{/}"><i class="material-icons">home</i>首页</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">message</i>班级公告</a></li>
+				<li class="btn btn-default"><a th:href="@{/classPhoto}"><i class="material-icons">image</i>班级相册</a></li>
+				<li class="btn btn-default"><a th:href="@{/party}"><i class="material-icons">supervisor_account</i>班级聚会</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">supervisor_account</i>班级成员</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">file_download</i>资料分享</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">swap_horiz</i>留言反馈</a></li>
+			</ul>
+		</div><!--leftmenu end-->
+		<div class="leftmenu-mb" id="leftmenu-mb"></div><!--左菜单遮罩-->
+		<!-- <div class="chat-mb" id="chat-mb"></div> -->
+		<div class="chat hidden-xs" id="chat">
+			占位  占位  占位  占位  占位
+		</div><!--chat end-->
+		<!---------- main in here ---------->
+		<div class="container">
+			<div class="block-header sresult-title">
+				<ol class="breadcrumb text-center">		  
+				  <li class="active">以 “<span th:text="${key}"></span>” 为关键字的搜索结果</li>
+				</ol>				
+				<!-- <a href="javascript:void(0)" class="btn btn-info party-launch-btn pull-right">添加照片</a> -->
+			</div><!--block-header end-->
+
+			<!--班级成员结果-->
+			<div class="sresult">
+				<div class="block-header">
+					<ol class="breadcrumb">		  
+					  <li class="active">班级成员</li>
+					</ol>				
+				</div><!--block-header end-->
+				<div th:each="user:${userlist}" class="member-main">
+					
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="item">
+							<div class="item-head">
+								<a href="#">
+									<img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt="">
+								</a>
+							</div><!--item-head end-->
+							<div class="item-info">
+								<strong th:text="${user.username}">**</strong>
+								<small th:text="${user.usermail}">**</small>
+							</div><!--item-info end-->
+							<div class="item-footer"><a href="#" class="withripple">发消息</a></div>
+						</div><!--item end-->
+					</div><!--col-md-3 end-->
+					
+				</div><!--member-main end-->
+			</div><!--sresult end-->
+
+			<!--班级公告结果-->
+			<div class="sresult">
+				<div class="block-header">
+					<ol class="breadcrumb">		  
+					  <li class="active">班级公告</li>
+					</ol>				
+				</div><!--block-header end-->
+				<div class="class-main plr8">
+					<div class="col-md-4 plr8">
+						<div class="card">
+							<div class="card-header">
+	              <div class="dropdown party-menu">
+								  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"> 
+								    <i class="material-icons">more_vert</i>
+								  </button>
+								  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+								    <li><a href="#" class="text-center">编辑</a></li>
+								    <li><a href="#" class="text-center">删除</a></li>
+								  </ul>
+								</div>
+	              <div class="media-con">
+	                <div class="pull-left">
+	                	<a class="home-way" href="#">
+	                		<img class="lv-img" src="images/tou.jpg" alt="">
+	                	</a>
+	                </div>
+	                <div class="media-body m-t-5">
+	                  <h2>林晓鑫<small>发布于 2016-10-23</small></h2>
+	                </div>
+	              </div>
+	            </div><!--card-header end-->
+	           	<div class="card-body">
+		            <div class="Jcontent toggle-height" name="infobody"> 
+		            	<strong>第二届全国双创周暨深圳国际创客周活动</strong>
+		              <p class="Jtext">时间：10月12日至18日 地点：广东省深圳市南山科技园、深圳湾创业广场。 本次国际创客周如火如荼地开展中，现场四周道路被警卫封锁，开辟了长宽一千平米左右的场地，可容纳几万人次，可谓是一场空前的创客作品展览会。 </p>
+		              <p class="Jtext">深圳技师学院受邀参加了本次的创客展览会，学院对此次创客周高度重视，并将学院的3D建模打印、皮艺、木艺、饰品、无人机、机器人、机械臂和珠宝3D全息展示等创客作品拿出展览，因创意有料而得到了众多的围观人群和领导的鼓励和支持。</p>
+		            </div><!--card-content end-->
+		          </div><!--card-body end-->
+		          <div class="link-list">
+		          	<p class="title">暂无附件</p>
+		          </div><!--link-list end-->
+						</div><!--card end-->
+					</div><!--col-md-3 end-->
+					<div class="col-md-4 plr8">
+						<div class="card">
+							<div class="card-header">
+	              <div class="dropdown party-menu">
+								  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"> 
+								    <i class="material-icons">more_vert</i>
+								  </button>
+								  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+								    <li><a href="#" class="text-center">编辑</a></li>
+								    <li><a href="#" class="text-center">删除</a></li>
+								  </ul>
+								</div>
+	              <div class="media-con">
+	                <div class="pull-left">
+	                	<a class="home-way" href="#">
+	                		<img class="lv-img" src="images/tou.jpg" alt="">
+	                	</a>
+	                </div>
+	                <div class="media-body m-t-5">
+	                  <h2>林晓鑫<small>发布于 2016-10-23</small></h2>
+	                </div>
+	              </div>
+	            </div><!--card-header end-->
+	           	<div class="card-body">
+		            <div class="Jcontent toggle-height" name="infobody"> 
+		            	<strong>你好</strong>
+		              <p class="Jtext">13int-1班级网站</p>
+		            </div><!--card-content end-->
+		          </div><!--card-body end-->
+		          <div class="link-list">
+		          	<p class="title">附件下载：</p>
+		          	<ul>
+		          		<li><a href="#">第8周班会指引</a></li>
+		          		<li><a href="#">电子信息系技能节报名表</a></li>
+		          		<li><a href="#">电子信息系技能节报名表</a></li>
+		          	</ul>
+		          </div><!--link-list end-->
+						</div><!--card end-->
+					</div><!--col-md-3 end-->
+					<div class="col-md-4 plr8">
+						<div class="card">
+							<div class="card-header">
+	              <div class="dropdown party-menu">
+								  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"> 
+								    <i class="material-icons">more_vert</i>
+								  </button>
+								  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+								    <li><a href="#" class="text-center">编辑</a></li>
+								    <li><a href="#" class="text-center">删除</a></li>
+								  </ul>
+								</div>
+	              <div class="media-con">
+	                <div class="pull-left">
+	                	<a class="home-way" href="#">
+	                		<img class="lv-img" src="images/tou.jpg" alt="">
+	                	</a>
+	                </div>
+	                <div class="media-body m-t-5">
+	                  <h2>林晓鑫<small>发布于 2016-10-23</small></h2>
+	                </div>
+	              </div>
+	            </div><!--card-header end-->
+	           	<div class="card-body">
+		            <div class="Jcontent toggle-height" name="infobody"> 
+		            	<strong>第二届全国双创周暨深圳国际创客周活动</strong>
+		              <p class="Jtext">时间：10月12日至18日 地点：广东省深圳市南山科技园、深圳湾创业广场。 本次国际创客周如火如荼地开展中，现场四周道路被警卫封锁，开辟了长宽一千平米左右的场地，可容纳几万人次，可谓是一场空前的创客作品展览会。 </p>
+		              <p class="Jtext">深圳技师学院受邀参加了本次的创客展览会，学院对此次创客周高度重视，并将学院的3D建模打印、皮艺、木艺、饰品、无人机、机器人、机械臂和珠宝3D全息展示等创客作品拿出展览，因创意有料而得到了众多的围观人群和领导的鼓励和支持。</p>
+		            </div><!--card-content end-->
+		          </div><!--card-body end-->
+		          <div class="link-list">
+		          	<p class="title">附件下载：</p>
+		          	<ul>
+		          		<li><a href="#">电子信息系技能节报名表</a></li>
+		          	</ul>
+		          </div><!--link-list end-->
+						</div><!--card end-->
+					</div><!--col-md-3 end-->
+				</div><!--class-main end-->
+			</div><!--sresult end-->
+
+			<!--班级相册结果-->
+			<div class="sresult">
+				<div class="block-header">
+					<ol class="breadcrumb">		  
+					  <li class="active">班级相册</li>
+					</ol>				
+				</div><!--block-header end-->
+				<div class="photo-walls content">
+					<div class="grid">
+						<div class="grid__item" data-size="1000x1000">
+							<a href="images/classPhoto/4.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/4.jpg" alt="" />
+								<div class="description description--grid">
+									<h3>班级相册</h3>
+									<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+										<em>&mdash;&mdash; 林晓鑫 <span>2016.10.20 23:00</span></em>
+									</p>
+									<div class="details datailsGood">
+										<ul>
+											<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+											<li><div class="img-div"><img src="images/1.jpg" alt=""></div></li>
+											<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+											<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+											<li><div class="img-div"><img src="images/1.jpg" alt=""></div></li>
+											<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+											<li><div class="img-div"><img src="images/tou.jpg" alt=""></div></li>
+											<li><div class="img-div"><img src="images/1.jpg" alt=""></div></li>
+											<li>等29个赞</li>
+										</ul>
+										<div class="dropdown party-menu photo-operate">
+										  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"> 
+										    <i class="material-icons">more_vert</i>
+										  </button>
+										  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+										    <li class="text-center feel-Good">点赞</li>
+										    <li class="text-center want-Comment">评论</li>
+										  </ul>
+										</div>
+									</div>
+									<div class="details datailsComment">
+										<div class="form-group want-Comment-input">
+						        	<input type="text" class="form-control" id="Comment" placeholder="评论：">
+							        <button class="btn">发送</button>
+								    </div>
+										<ul>
+											<li><span>林晓鑫：</span>Bigbang团队成员TOP，负责rap，演员，歌星，颜值实力共存。</li>
+											<li><span>张静：</span>我的偶像，怎么看都帅。</li>
+										</ul>
+									</div>
+								</div><!--description end-->
+							</a>
+						</div><!--grid__item end-->
+						<div class="grid__item" data-size="1000x1000">
+							<a href="images/classPhoto/2.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/2.jpg" alt="" />
+								<div class="description description--grid">
+									<h3>班级相册</h3>
+									<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+										<em>&mdash;&mdash; 林晓鑫</em>
+									</p>
+									<div class="details">
+										<ul>
+											<li><span>2016.10.20 23:00</span></li>
+											<li><span>105KB</span></li>
+										</ul>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="grid__item" data-size="1000x1000">
+							<a href="images/classPhoto/14.jpg" class="img-wrap c-shadow"><img src="images/classPhoto/14.jpg" alt="" />
+								<div class="description description--grid">
+									<h3>班级相册</h3>
+									<p>顾名思义即同学之间的聚会，其意含同学之间的离别，有短暂的分开后的再相聚，也有分别多年后同学再次相聚，其中也暗含对分别多年后再次相聚的一种莫名复杂的情感。 
+										<em>&mdash;&mdash; 林晓鑫</em>
+									</p>
+									<div class="details">
+										<ul>
+											<li><span>2016.10.20 23:00</span></li>
+											<li><span>105KB</span></li>
+										</ul>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div><!--grid end-->
+					<div class="preview">
+						<button class="action action--close"><i class="material-icons">close</i><span class="text-hidden">Close</span></button>
+						<div class="description description--preview"></div>
+					</div><!--preview end-->
+				</div><!--photo-walls end-->
+			</div><!--sresult end-->
+						
+			<!--笔记分享结果-->
+			<div class="sresult">
+				<div class="block-header">
+					<ol class="breadcrumb">		  
+					  <li class="active">笔记分享</li>
+					</ol>				
+				</div><!--block-header end-->
+				<div class="card listview-card mm-t-0">
+	        <div class="listview lv-bordered lv-lg">
+	          <div class="lv-body">
+							<div class="lv-item media">
+	              <div class="pull-left"><img class="lv-img-sm" src="images/tou.jpg" alt=""></div>
+	              <div class="media-body">
+	                <div class="lv-title">
+	                	<a href="dataShare_view.html">C3中众多单位px,em,rem,vh,vw,vmin,vmax介绍</a>
+	                </div>
+	                <small class="lv-small">px：绝对单位，页面按精确像素展示em：相对单位，基准点为父节点字体的大小，如果自身定义了font-size按自身来计算（浏览器默认字体是16px），整个页面内1em不是一个固定的值。rem：相对单位，可理解为”rootem”,相对根节点html的字体大小来计算，CSS3新加属性，chrome/firefox/IE9+支持。</small>
+	                <ul class="lv-classify">
+	                  <li>2016.11.6 12:24</li>
+	                  <li>分类：HTML/CSS</li>
+	                  <li>浏览：5</li>
+	                </ul>
+	                <div class="lv-actions actions dropdown party-menu">
+	                  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" id="dropdownMenu1">
+	                    <i class="material-icons">more_vert</i>
+	                  </button>
+	                  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+	                    <li><a href="#">编辑</a></li>
+	                    <li><a href="#">删除</a></li>
+	                  </ul>
+	                </div>
+	              </div><!--media-body end-->
+	            </div><!--lv-item end-->
+
+	            <div class="lv-item media">
+	              <div class="pull-left"><img class="lv-img-sm" src="images/tou.jpg" alt=""></div>
+	              <div class="media-body">
+	                <div class="lv-title">
+	                	<a href="#">移动端网页布局中需要注意事项以及解决方法总结</a>
+	                </div>
+	                <small class="lv-small">移动端网页布局中需要注意事项以及解决方法总结，这份对我们在布局移动端网页的时候非常有用！winphone系统a、input标签被点击时产生的半透明灰色背景怎么去掉...</small>
+	                <ul class="lv-classify">
+	                  <li>2016.11.1 15:10</li>
+	                  <li>分类：HTML/CSS</li>
+	                  <li>浏览：12</li>
+	                </ul>
+	                <div class="lv-actions actions dropdown party-menu">
+	                  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" id="dropdownMenu2">
+	                    <i class="material-icons">more_vert</i>
+	                  </button>
+	                  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+	                    <li><a href="#">编辑</a></li>
+	                    <li><a href="#">删除</a></li>
+	                  </ul>
+	                </div>
+	              </div><!--media-body end-->
+	            </div><!--lv-item end-->            
+	          </div><!--lv-body end-->
+	        </div><!--listview end-->
+	      </div><!--card end-->
+			</div><!--sresult end-->
+
+			<!--班级聚会结果-->
+			<div  class="sresult">
+				<div class="block-header">
+					<ol class="breadcrumb">		  
+					  <li class="active">班级聚会</li>
+					</ol>				
+				</div><!--block-header end-->
+				<div id="party-main" class="card mm-t-0">
+					<div class="party-body">
+						<div class="timecard-body">
+		          <div th:each=article:${partylist} class="timeline">
+		           
+		           <div class="timeline-entry">
+				
+	              <div class="timeline-stat">
+	                <div class="timeline-icon"></div>
+	                <div class="timeline-time" th:text="${article.starttime}"></div>
+	              </div><!--timeline-stat end-->
+	              <div class="timeline-label" >
+	              	<div class="tl-header" th:each="post:${users}">
+	              		<div class="tvh-user pull-left">
+                      <img class="img-responsive" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${post.headimgfile}__}" alt="">
+                    </div>
+                    <div class="media-body p-t-5">
+                      <strong>发起人：<span th:text="${post.username}"></span></strong>
+                      <small class="tl-time">发起时间：<span th:text="${article.starttime}"></span></small>
+                    </div>
+                    <div class="dropdown party-menu">
+										  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"> 
+										    <i class="material-icons">more_vert</i>
+										  </button>
+										  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+										    <li class="edit"><a class="text-center">编辑</a></li>
+										    <li class="delete"><a class="text-center">删除</a></li>
+										    <li class="article-id" th:text="${article.id}" style="display:none"></li>
+										  </ul>
+					</div>                    
+	              	</div><!--tl-header end-->
+	                <div class="comDetail">
+	                  <div class="label-title">时间：<span th:text="${article.starttime}"></span><span>-</span><span th:text="${article.endtime}"></span></div>
+	                  <div>地址：<span th:text="${article.address}"></span></div>
+	                  <div>主题：<span th:text="${article.topic}"></span></div>
+	                  <div>消费：<span th:text="${article.money}"></span></div>
+	                  <div>备注：<span th:text="${article.note}"></span></div>
+										<div th:id="${article.id}" class="carousel slide party-photos" data-ride="carousel">
+										  <!-- Indicators -->
+										  <ol class="carousel-indicators">
+										    <li th:data-target="${'#'+article.id}" data-slide-to="0" class="active"></li>
+										    <li th:data-target="${'#'+article.id}" data-slide-to="1"></li>
+										    <li th:data-target="${'#'+article.id}" data-slide-to="2"></li>
+										  </ol>
+										  <!-- Wrapper for slides -->
+										  <div  class="carousel-inner" th:each="listImg:${article.photos}" role="listbox">
+										   <div class="item active"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${listImg.name}__}" alt=""></div>
+										  </div>
+										  <!-- Controls -->
+										  <a class="left carousel-control" th:href="${'#'+article.id}" role="button" data-slide="prev">
+										    <span class="glyphicon glyphicon-chevron-left"></span>
+										    <span class="sr-only">Previous</span>
+										  </a>
+										  <a class="right carousel-control" th:href="${'#'+article.id}" role="button" data-slide="next">
+										    <span class="glyphicon glyphicon-chevron-right"></span>
+										    <span class="sr-only">Next</span>
+										  </a>
+										</div><!--carousel end-->
+					      	</div><!--comDetail end-->
+	              </div><!--timeline-label end-->                    
+	            </div><!--timeline-entry end-->
+		           
+		           
+		          </div><!--timeline end-->
+		        </div><!--timecard-body-->
+					</div><!--party-body end-->
+				</div><!--party-main end-->
+			</div><!--sresult end-->
+
+			<!--留言反馈结果-->
+			<div class="sresult">
+				<div class="block-header">
+					<ol class="breadcrumb">		  
+					  <li class="active">留言反馈</li>
+					</ol>				
+				</div><!--block-header end-->
+				<div id="party-main" class="card mm-t-0">
+					<div class="party-body">
+						<div class="timecard-body">
+		          <div class="timeline">
+		            <div class="timeline-entry">
+		              <div class="timeline-stat">
+		                <div class="timeline-icon"></div>
+		                <div class="timeline-time">2016.10.14</div>
+		              </div><!--timeline-stat end-->
+		              <div class="timeline-label">
+		              	<div class="tl-header">
+		              		<div class="tvh-user pull-left">
+	                      <img class="img-responsive" src="images/tou.jpg" alt="">
+	                    </div>
+	                    <div class="media-body p-t-5">
+	                      <strong>来自：林晓鑫</strong>
+	                      <small class="tl-time">发表时间：2016.10.14</small>
+	                    </div>                    
+											<div class="dropdown party-menu">
+											  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+											    <i class="material-icons">more_vert</i>
+											  </button>
+											  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+											    <li><a href="#" class="text-center">编辑</a></li>
+											    <li><a href="#" class="text-center">删除</a></li>
+											  </ul>
+											</div>
+		              	</div><!--tl-header end-->
+		                <div class="comDetail">
+		                	<div class="label-title">标题：<span>留言反馈</span></div>	                  
+		                  <div>留言：<span>留言，拉进你我之间的距离，也是使用较广泛的一种与用户交流的方式。反馈，提出你对我们的看法，收集来自你的意见或需求信息，我们会作出相应的回复，通过时时不断的交流与沟通和更新修改，来造就最完美的我们。</span></div>
+											<div id="carousel-example-generic2" class="carousel slide party-photos" data-ride="carousel">
+											  <!-- Indicators -->
+											  <ol class="carousel-indicators">
+											    <li data-target="#carousel-example-generic2" data-slide-to="0" class="active"></li>
+											    <li data-target="#carousel-example-generic2" data-slide-to="1"></li>
+											    <li data-target="#carousel-example-generic2" data-slide-to="2"></li>
+											  </ol>
+											  <!-- Wrapper for slides -->
+											  <div class="carousel-inner" role="listbox">
+											    <div class="item active"><img src="images/party/banner1.jpg" alt=""></div>
+											    <div class="item"><img src="images/party/banner2.jpg" alt=""></div>
+											    <div class="item"><img src="images/party/banner3.jpg" alt=""></div>
+											  </div>
+											  <!-- Controls -->
+											  <a class="left carousel-control" href="#carousel-example-generic2" role="button" data-slide="prev">
+											    <span class="glyphicon glyphicon-chevron-left"><</span>
+											    <span class="sr-only">Previous</span>
+											  </a>
+											  <a class="right carousel-control" href="#carousel-example-generic2" role="button" data-slide="next">
+											    <span class="glyphicon glyphicon-chevron-right">></span>
+											    <span class="sr-only">Next</span>
+											  </a>
+											</div><!--carousel end-->
+											<!-- <div class="button-label">
+		                  	<div class="btn join-party"><a href="javascript:void(0)">加入聚会</a></div>
+		                  </div> -->
+		                </div><!--comDetail end-->
+		              </div><!--timeline-label end-->                    
+		            </div><!--timeline-entry end-->
+		          </div><!--timeline end-->
+		        </div><!--timecard-body-->
+					</div><!--party-body end-->
+				</div><!--party-main end-->
+			</div><!--sresult end-->
+
+		</div><!--container end-->
+		<!---------- main in here  end---------->
+	</div><!--main end-->
+	<div id="footer">
+		Copyright © 2016 13INT-1.TOP
+    <ul class="f-menu">
+        <li><a href="#">发送反馈</a></li>
+        <li><a href="#">帮助</a></li>
+        <li><a href="#">联系我们</a></li>
+    </ul>
+	</div><!--footer end-->
+	
+	<script th:src="@{js/jquery-1.11.3.min.js}"></script>
+	<script th:src="@{js/bootstrap.min.js}"></script>
+	<script th:src="@{js/material.min.js}"></script>
+	<script th:src="@{js/ripples.min.js}"></script>
+	<script>$.material.init()</script>
+	<!--menu-icon-wrapper-->
+	<link rel="stylesheet" type="text/css" th:href="@{js/menu-icon/normalize.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{js/menu-icon/component.css}" />
+	<script th:src="@{js/menu-icon/segment.min.js}"></script>
+	<script th:src="@{js/menu-icon/ease.min.js}"></script>
+	<script th:src="@{js/menu-icon/main.js}"></script>
+	<!--menu-icon-wrapper end-->
+	<script th:src="@{js/header_main.js}"></script><!--header按钮响应-->
+	<!--messenger-->
+	<link rel="stylesheet" th:href="@{js/messenger/messenger.css}">
+	<link rel="stylesheet" th:href="@{js/messenger/messenger-theme-future.css}">
+	<script th:src="@{js/messenger/messenger.min.js}"></script>
+	<!--messenger end-->
+	<script>$('.carousel').carousel({ interval: 4000 })</script>
+	<!--照片瀑布-->
+	<link rel="stylesheet" type="text/css" th:href="@{js/classPhoto/classPhoto.css}"/>
+	<script th:src="@{js/classPhoto/modernizr-custom.js}"></script>
+	<script th:src="@{js/classPhoto/imagesloaded.pkgd.min.js}"></script>
+	<script th:src="@{js/classPhoto/masonry.pkgd.min.js}"></script>
+	<script th:src="@{js/classPhoto/classie.js}"></script>
+	<script th:src="@{js/classPhoto/main.js}"></script>
+	<script th:src="@{js/classPhoto/other.js}"></script>
+	<!--照片瀑布 end-->
+	<script src="js/every/search.js"></script>
+</body>
+</html>

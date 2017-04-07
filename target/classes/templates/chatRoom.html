@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>聊天室</title>
+	<link rel="shortcut icon" href="fonts/favicon.ico">	
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-material-design.min.css">
+	<link href="js/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/ripples.min.css">
+	<link rel="stylesheet" href="css/material-icons.css">	
+	<link rel="stylesheet" href="css/framework.css"><!--头的架设-->
+	<link rel="stylesheet" href="css/style.css">
+	<!--[if IE]>
+		<script src="../static/http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<!-- Page Preloader -->
+	<div class="animationload">
+	  <div class="loader">
+	    <svg class="circular" viewBox="25 25 50 50">
+	      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="1"/>
+	    </svg>
+	    <p>Loading...</p>
+	  </div>
+	</div>
+	<!-- Page Preloader end-->
+
+</head>
+<body>
+	<div id="header">
+		<ul class="header-inner">
+			<li class="menu-trigger" id="menu-trigger">
+				<div id="menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: hidden">
+					<svg width="1000px" height="1000px">
+						<path id="pathA" d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"></path>
+						<path id="pathB" d="M 300 500 L 700 500"></path>
+						<path id="pathC" d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"></path>
+					</svg>
+					<button id="menu-icon-trigger" class="menu-icon-trigger"></button>
+				</div><!-- menu-icon-wrapper-->
+				<div id="dummy" class="dummy"></div><!-- dummy -->
+			</li>
+			<li class="logo hidden-xs"><a th:href="@{/}">13INT-1</a></li>
+			<li class="pull-right">
+				<ul class="top-menu">
+					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+					<li class="dropdown" id="info-btn">
+						<a href="javascript:void(0);">
+							<i class="material-icons">notifications</i>
+						</a>
+						<div class="dropdown-menu dropMenu pull-right" id="info">
+							<div class="lv-header">消息提醒</div>
+              <div class="lv-body">                  
+                <a class="lv-item" href="javascript:void(0);">
+                  <div class="media">
+                    <div class="pull-left">
+                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                    </div>
+                    <div class="media-body">
+                      <div class="lv-title">David Belle</div>
+                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                    </div>
+                  </div>
+                </a>
+                <a class="lv-item" href="javascript:void(0);">
+                  <div class="media">
+                    <div class="pull-left">
+                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                    </div>
+                    <div class="media-body">
+                      <div class="lv-title">David Belle</div>
+                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div style="overflow: hidden;"><a class="lv-footer" href="javascript:void(0);">所有消息</a></div>
+						</div><!--dropdown-menu end-->
+					</li>
+					<li class="hidden-xs chat-btn"><a href="javascript:void(0);" id="chat-btn"><i class="material-icons">comment</i></a></li>
+					<!-- <li><a href="login.html" class="login-register"><span>登录/注册</span></a></li> -->
+					<!-- 登陆前 -->
+					<li th:if="${#lists.isEmpty(users)}"><a th:href="@{/login}"class="login-register"><span>登录/注册</span></a></li>
+					<!-- 登陆前 end-->
+					<!-- 登录后 -->
+					<li id="top-user-btn" th:if="${not #lists.isEmpty(users)}">
+						<div class="user-headimg"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${users.headimgfile}__}" alt=""></div>
+						<div class="dropdown-menu dropMenu pull-right" id="top-user">
+              <div class="lv-header">
+                个人信息                  
+              </div>
+              <div class="lv-body">
+                <div class="myInfo">
+                  <div class="myphoto"> 
+                    <div class="userhead" data-type="update_avatar"> 
+                      <a th:href="@{/profile}" style="display:block;">
+	                      <img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${users.headimgfile}__}" alt="">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="myshow">
+                    <div class="myname"></div><span th:text="${users.username}"></span></div>
+                    <div class="Email"><span th:text="${users.usermail}"></span></div>
+                    <div class="signature"><span th:text="${users.saying}"></span></div>
+                    <a class="btn user-myprofile" th:href="@{/profile}">我的账户</a>
+                    <a class="btn user-setting" th:href="@{/config}">设置</a>
+                  </div>
+                </div><!--myInfo end-->
+                <form th:action="@{/logout}" method="get">
+              		<div style="overflow: hidden;"><button class="lv-footer" type="submit">退出</button></div>
+              		<!-- <a class="lv-footer" href="javascript:void(0);">退出</a> -->
+              		
+              	</form>
+						</div><!--dropdown-menu end-->
+					</li>
+					<!-- 登录后 end-->
+				</ul>
+			</li>
+		</ul>
+		<div id="top-search-wrap">
+			<div class="tsw-inner">
+				<i class="material-icons top-search-btn">search</i>
+        <form>
+        	<input type="text" name="keyword">
+        </form>
+			</div><!--tsw-inner end-->
+		</div><!--top-search-wrap end-->
+	</div>
+	<div id="main">
+		<div class="btn currenty-new c-shadow"><a href="javascript:void(0);"><i class="material-icons">add</i></a></div>
+		<div class="leftmenu" id="leftmenu">
+			<ul class="main-menu">
+				<li class="btn btn-default"><a th:href="@{/}"><i class="material-icons">home</i>首页</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">message</i>班级公告</a></li>
+				<li class="btn btn-default"><a th:href="@{/classPhoto}"><i class="material-icons">image</i>班级相册</a></li>
+				<li class="btn btn-default"><a th:href="@{/party}"><i class="material-icons">supervisor_account</i>班级聚会</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">supervisor_account</i>班级成员</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">file_download</i>资料分享</a></li>
+				<li class="btn btn-default"><a href="#"><i class="material-icons">swap_horiz</i>留言反馈</a></li>
+			</ul>
+		</div><!--leftmenu end-->
+		<div class="leftmenu-mb" id="leftmenu-mb"></div><!--左菜单遮罩-->
+		<!-- <div class="chat-mb" id="chat-mb"></div> -->
+		<div class="chat hidden-xs" id="chat">
+			占位  占位  占位  占位  占位
+		</div><!--chat end-->
+		<!---------- main in here ---------->
+		<div class="container">
+			<div class="block-header">
+				<ol class="breadcrumb">
+				  <li><a th:href="@{/}">首页</a></li>				  
+				  <li class="active">聊天室</li>
+				</ol>				
+				<a href="javascript:void(0)" class="btn btn-info party-launch-btn pull-right">发起群聊</a>
+			</div><!--block-header end-->
+			
+			<div class="currency-form-holder">
+				<div id="party-form">
+					<div class="party-form c-shadow" >
+						<div class="form-header">
+							<div class="tvh-user pull-left">
+	              <img class="img-responsive" src="images/tou.jpg" alt="">
+	            </div>
+	            <div class="media-body p-t-5">
+	              <strong class="col-md-6 col-sm-6 col-xs-6 text-center">发起人：林晓鑫</strong>
+	              <strong class="col-md-6 col-sm-6 col-xs-6 text-center">发布时间：2016.10.14</strong>
+	            </div>                    
+							<div class="party-menu">
+							  <i class="material-icons currency-form-close">close</i>
+							</div><!--party-menu end-->
+						</div><!--form-header end-->
+						<div class="form-body">
+							<form action="">
+								<div class="form-group label-floating row">
+									<div class="col-md-12 plr0">
+									 	<label class="control-label" for="title">标题：</label>
+									  <input class="form-control" id="title" type="text">
+									</div>
+								</div><!--form-group end-->
+								<div class="form-group label-floating row">
+		              <div class="col-md-12 plr0">
+		              	<label for="details" class="">内容：</label>
+		                <div id="summernote"></div>
+		              </div>
+		            </div><!--form-group end-->
+		            <div class="form-group row note-classify">
+						      <label class="col-md-1 control-label">笔记分类：</label>
+                  <div class="radio radio-primary plr0">
+                    <label><input type="radio" name="classify" value="HTML/CSS">HTML/CSS</label>
+                  </div><!--radio end-->
+                  <div class="radio radio-primary plr0">
+                    <label><input type="radio" name="classify" value="JQuery">JQuery</label>
+                  </div><!--radio end-->
+                  <div class="radio radio-primary plr0">
+                    <label><input type="radio" name="classify" value="PHP">PHP</label>
+                  </div><!--radio end-->
+                  <div class="radio radio-primary plr0">
+                    <label><input type="radio" name="classify" value="JAVA">JAVA</label>
+                  </div><!--radio end-->
+                  <div class="radio radio-primary plr0">
+                    <label><input type="radio" name="classify" value="插件">插件</label>
+                  </div><!--radio end-->
+                  <div class="radio radio-primary plr0">
+                    <label><input type="radio" name="classify" value="其他">其他</label>
+                  </div><!--radio end-->
+						    </div><!--form-group end-->
+		            <div class="button-label">
+		            	<button type="reset" class="btn join-cancel currency-form-close">取消</button>
+		            	<button type="submit" class="btn join-party">提交</button>
+		            </div><!--button-label end-->
+							</form>
+						</div><!--form-body end-->
+					</div><!--party-form end-->
+				</div>
+			</div><!--currency-form-holder end-->
+
+			<div class="card" id="messages-main" th:each="user:${users}">
+		    <div class="ms-menu">
+	        <div class="ms-block">
+            <div class="ms-user">
+              <div class="img-div"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt=""></div>
+              <div class="info">Signed in as <br> <span th:text=${user.usermail}></span></div>
+            </div>
+	        </div><!--ms-block end-->
+	        <div class="ms-block" style="padding: 0 20px;">
+            <div class="dropdown">
+              <a class="btn btn-block classify-messages" href="#" data-toggle="dropdown">
+                聊天 <i class="caret m-l-5"></i>
+              </a>
+              <ul class="dropdown-menu dm-icon w-100">
+                <li><a href="#"><i class="material-icons">email</i> 聊天</a></li>
+                <li><a href="#"><i class="material-icons">person</i> 通讯录</a></li>
+                <li><a href="#"><i class="material-icons">supervisor_account</i> 好友</a></li>
+              </ul>
+            </div>
+	        </div><!--ms-block end-->
+	        <div class="listview lv-user">
+            <div class="lv-item media user" th:each="post:${posts}">
+              <div class="lv-avatar pull-left">
+                <img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${post.headimgfile}__}" alt="">
+              </div>
+              <div class="media-body">
+                <div class="lv-title"><span class="outUsername" th:text="${post.username}"></span><span class="hidden_text" hidden th:text="${post.studentld}"></span></div>
+                <div class="lv-small"><span th:text="${post.saying}"></span></div>
+              </div>
+            </div><!--lv-item end-->
+            
+<!--             <div class="lv-item media">
+              <div class="lv-avatar pull-left"><img src="images/tou2.jpg" alt=""></div>
+              <div class="media-body">
+                <div class="lv-title">Ann Watkinson</div>
+                <div class="lv-small">Cum sociis natoque penatibus </div>
+              </div>
+            </div>lv-item end
+            
+            <div class="lv-item media">
+              <div class="lv-avatar pull-left"><img src="images/tou2.jpg" alt=""></div>
+              <div class="media-body">
+                <div class="lv-title">Marse Walter</div>
+                <div class="lv-small">Suspendisse sapien ligula</div>
+              </div>
+            </div>lv-item end
+            
+            <div class="lv-item media">
+              <div class="lv-avatar pull-left">
+                <img src="images/tou.jpg" alt="">
+              </div>
+              <div class="media-body">
+                <div class="lv-title">Jeremy Robbins</div>
+                <div class="lv-small">Phasellus porttitor tellus nec</div>
+              </div>
+            </div>lv-item end
+            
+            <div class="lv-item media">
+              <div class="lv-avatar pull-left">
+                <img src="images/tou.jpg" alt="">
+              </div>
+              <div class="media-body">
+                <div class="lv-title">Reginald Horace</div>
+                <div class="lv-small">Quisque consequat arcu eget</div>
+              </div>
+            </div>lv-item end
+            
+            <div class="lv-item media">
+              <div class="lv-avatar pull-left"><img src="images/tou2.jpg" alt=""></div>
+              <div class="media-body">
+                <div class="lv-title">Shark Henry</div>
+                <div class="lv-small">Nam lobortis odio et leo maximu</div>
+              </div>
+            </div>lv-item end
+            
+            <div class="lv-item media">
+              <div class="lv-avatar pull-left"><img src="images/tou2.jpg" alt=""></div>
+              <div class="media-body">
+                <div class="lv-title">Paul Van Dack</div>
+                <div class="lv-small">Nam posuere purus sed velit auctor sodales</div>
+              </div>
+            </div>lv-item end
+            
+            <div class="lv-item media">
+              <div class="lv-avatar pull-left">
+                <img src="images/tou.jpg" alt="">
+              </div>
+              <div class="media-body">
+                <div class="lv-title">James Anderson</div>
+                <div class="lv-small">Vivamus imperdiet sagittis quam</div>
+              </div>
+            </div>lv-item end
+            
+            <div class="lv-item media">
+              <div class="lv-avatar pull-left">
+                <img src="images/tou.jpg" alt="">
+              </div>
+              <div class="media-body">
+                <div class="lv-title">Kane Williams</div>
+                <div class="lv-small">Suspendisse justo nulla luctus nec</div>
+              </div>
+            </div>lv-item end -->
+	        </div><!--listview end-->
+		    </div>
+		    <div class="ms-body">
+	        <div class="listview lv-message">
+            <div class="lv-header-alt clearfix">
+              <div id="ms-menu-trigger">
+                  <div class="line-wrap">
+                      <div class="line top"></div>
+                      <div class="line center"></div>
+                      <div class="line bottom"></div>
+                  </div>
+              </div><!--ms-menu-trigger end-->
+              <div class="lvh-label hidden-xs">
+                  <div class="lv-avatar pull-left">
+                  </div>
+                  <span class="c-black"></span>
+              </div><!--lvh-label end-->
+              <div class="dropdown party-menu messages-menu">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"> 
+                  <i class="material-icons">more_vert</i>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#" class="text-center">编辑</a></li>
+                  <li><a href="#" class="text-center">删除</a></li>
+                </ul>
+              </div>
+            </div><!--lv-header-alt end-->
+            <div class="lv-body chat">
+              <div class="lv-item media chat">
+<!--                 <div class="lv-avatar pull-left">
+                  <img src="images/tou.jpg" alt="">
+                </div>
+                <div class="media-body">
+                  <div class="ms-item">你好</div>
+                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 09:00</small>
+                </div> -->
+              </div><!--lv-item end-->
+              
+<!--               <div class="lv-item media right">
+                <div class="lv-avatar pull-right">
+                  <img src="images/tou.jpg" alt="">
+                </div>
+                <div class="media-body">
+                  <div class="ms-item">你好</div>
+                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 09:30</small>
+                </div>
+              </div>lv-item end
+              
+              <div class="lv-item media">
+                <div class="lv-avatar pull-left">
+                  <img src="images/tou.jpg" alt="">
+                </div>
+                <div class="media-body">
+                  <div class="ms-item">
+                      Etiam ex arcumentum
+                  </div>
+                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 09:33</small>
+                </div>
+              </div>lv-item end
+              
+              <div class="lv-item media right">
+                <div class="lv-avatar pull-right">
+                  <img src="images/tou.jpg" alt="">
+                </div>
+                <div class="media-body">
+                  <div class="ms-item">
+                      Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus et magnis dis parturient montes,
+                  </div>
+                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 10:10</small>
+                </div>
+              </div>lv-item end
+              
+              <div class="lv-item media">
+                <div class="lv-avatar pull-left">
+                  <img src="images/tou.jpg" alt="">
+                </div>
+                <div class="media-body">
+                  <div class="ms-item">
+                      Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam ac tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum elit massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae rhoncus sapien volutpat eget
+                  </div>
+                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 10:24</small>
+                </div>
+              </div>lv-item end -->
+            </div><!--lv-body end-->
+            <div class="lv-footer ms-reply">
+              <textarea type="text" placeholder=""></textarea>
+              <button id = "send"><i class="material-icons">send</i></button>
+            </div><!--lv-footer end-->
+	        </div><!--listview end-->
+		    </div><!--ms-body end-->
+			</div><!--messages-main end-->
+		</div><!--container end-->
+
+		<!---------- main in here  end---------->
+	</div><!--main end-->
+	<div id="footer">
+		Copyright © 2016 13INT-1.TOP
+    <ul class="f-menu">
+        <li><a href="#">发送反馈</a></li>
+        <li><a href="#">帮助</a></li>
+        <li><a href="#">联系我们</a></li>
+    </ul>
+	</div><!--footer end-->
+	
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/material.min.js"></script>
+	<script src="js/ripples.min.js"></script>
+	<script>$.material.init()</script>
+	<!--menu-icon-wrapper-->
+	<link rel="stylesheet" type="text/css" href="js/menu-icon/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="js/menu-icon/component.css" />
+	<script src="js/menu-icon/segment.min.js"></script>
+	<script src="js/menu-icon/ease.min.js"></script>
+	<script src="js/menu-icon/main.js"></script>
+	<!--menu-icon-wrapper end-->
+	<script src="js/header_main.js"></script><!--header按钮响应-->
+	<!--messenger-->
+	<link rel="stylesheet" href="js/messenger/messenger.css">
+	<link rel="stylesheet" href="js/messenger/messenger-theme-future.css">
+	<script src="js/messenger/messenger.min.js"></script>
+	<!-- summernote -->
+	<link rel="stylesheet" href="js/summernote/summernote.css">
+	<script src="js/summernote/summernote.min.js"></script>
+	<script src="js/summernote/summernote-zh-CN.min.js"></script>
+	<!-- chat -->
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<script src="js/every/chat.js"></script>
+	<script>
+		$('#summernote').summernote({
+		  height: 300,                 // set editor height
+		  minHeight: null,             // set minimum height of editor
+		  maxHeight: null,             // set maximum height of editor
+		  focus: true,                 // set focus to editable area after initializing summernote
+		  lang: 'zh-CN',
+		  placeholder: '笔记内容格式请尽量工整；请勿发布任何广告形式的软文、招聘等宣传内容。'
+		});
+	</script>
+	<!-- summernote end-->
+	<!--表单的控制-->
+	<script>
+		$(".currenty-new, .party-launch-btn").on("click", function(){
+			//$("#party-form").slideDown(500);
+			//$("html,body").animate({scrollTop: 0},1000);
+  		  $._messengerDefaults = {
+					extraClasses: 'messenger-fixed messenger-theme-future messenger-on-top'
+				};
+			 $.globalMessenger().post({
+		            message: "此功能暂不可用",
+		            hideAfter: 3,
+		            type: 'error',
+		            //showCloseButton: true
+		        });
+		})
+		$(".currency-form-close").on("click", function(){
+			$("#party-form").slideUp();
+		})
+    // 缩小后变成菜单
+    $("#ms-menu-trigger").on("click", function(){
+      $("#ms-menu-trigger").toggleClass("open");
+      $(".ms-menu").toggleClass("toggled");
+    })
+    $(document).ready(function(){
+      $("#messages-main .ms-reply textarea").focus();
+    })
+	</script>
+</body>
+</html>
