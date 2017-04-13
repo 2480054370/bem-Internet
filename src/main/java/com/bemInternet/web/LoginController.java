@@ -53,26 +53,21 @@ public class LoginController {
 	}
 	
 	@PostMapping("/registration_post")
-	public @ResponseBody String createNewUser(@Valid UserRegisterForm user, BindingResult bindingResult) {
-		List<JsonResult> arr = new ArrayList<JsonResult>();
-		JsonResult jr = new JsonResult();
+	public @ResponseBody Map<String, Object> createNewUser(@Valid UserRegisterForm user) {
+		Map<String, Object> map = new HashMap<String, Object>();
+//		List<JsonResult> arr = new ArrayList<JsonResult>();
+//		JsonResult jr = new JsonResult();
 		User userExists = userService.findUserByStudentld(user.getStudentld());
 		if (userExists != null) {
-			
-			jr.setField("user_exist");
-			jr.setMessage("用户名已存在，请重新输入");
-			arr.add(jr);
+			map.put("data", "userExists");
 		}
-		else if (bindingResult.hasErrors() || !user.getNew_password().equals(user.getConfirm_password())) {
-			jr.setField("validation_error");
-			jr.setMessage("验证错误，请检查后重新输入");
-			arr.add(jr);
+		else if (!user.getNew_password().equals(user.getConfirm_password())) {
+			map.put("data", "error");
 		} else {
 			userService.saveUser(user);
-			jr.setMessage("success");
-			arr.add(jr);
+			map.put("data", "success");
 		}
-		return JSON.toJSONString(arr);
+		return map;
 	}
 	
 	// 发送邮箱验证
@@ -120,37 +115,36 @@ public class LoginController {
 	
 	// 验证验证码
 	@PostMapping("/check_vercode")
-	public @ResponseBody Map<String, Object> check_vercode(@Valid UserVercodeForm getuser, BindingResult bindingResult) {
+	public @ResponseBody Map<String, Object> check_vercode(@Valid UserVercodeForm getuser) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.err.println(bindingResult.getErrorCount());
 		String findEmail = getuser.getFindemail();
 		String ThisVerCode = getuser.getVercode();
 		String Thisaccount = userService.getEmailUser(findEmail);
 		String SerVerCode = userService.getUserCode(Thisaccount);
-		if (!ThisVerCode.equals(SerVerCode) || bindingResult.hasErrors()) {
-			map.put("msg", "code error");
+		if (!ThisVerCode.equals(SerVerCode)) {
+			map.put("data", "error");
 		} else {
 			map.put("account", Thisaccount);
 			// 从数据库删除验证码
 			User user = userService.get(Thisaccount);
 			user.setVercode("");
 			userService.update(user);
-			map.put("msg", "code success");
+			map.put("data", "success");
 		}
 		return map;
 	}
 
 	// 验证密码
 	@PostMapping("/check_updatepwd")
-	public @ResponseBody Map<String, Object> check_updatepwd(@Valid UserFindpwdForm getuser, BindingResult bindingResult) {
+	public @ResponseBody Map<String, Object> check_updatepwd(@Valid UserFindpwdForm getuser) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		if (!getuser.getCuppwd().equals(getuser.getCuprepwd()) || bindingResult.hasErrors()) {
-			map.put("msg", "update error");
+		if (!getuser.getCuppwd().equals(getuser.getCuprepwd())) {
+			map.put("data", "error");
 		} else {
 			User user = userService.get(getuser.getUpaccount());
 			user.setPassword(bCryptPasswordEncoder.encode(getuser.getCuppwd()));
 			userService.update(user);
-			map.put("msg", "update success");
+			map.put("data", "success");
 		}
 		return map;
 	}

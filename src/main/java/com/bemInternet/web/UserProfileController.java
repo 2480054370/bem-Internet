@@ -58,18 +58,14 @@ public class UserProfileController extends BaseController{
 	//修改手机邮箱
 	@PostMapping("/profile_authentication")
 	public @ResponseBody Map<String, Object> updateAuthentication(HttpServletRequest request,
-			@Valid UserProfileForm profile, BindingResult bindingResult) {
+			@Valid UserProfileForm profile) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		if (bindingResult.hasErrors()) {
-			map.put("msg", "error");
-		}else{
 			user.setPhonenumber(profile.getPhone());
 			user.setUsermail(profile.getEmail());
 			userService.update(user);
 			map.put("phone", profile.getPhone());
 			map.put("email", profile.getEmail());
-			map.put("msg", "success");
-		}
+			map.put("data", "success");
 			
 		return map;
 	}
@@ -77,11 +73,11 @@ public class UserProfileController extends BaseController{
 	//修改密码
 	@PostMapping("/profile_updatepassword")
 	public @ResponseBody Map<String, Object> updatepassword(HttpServletRequest request, 
-			@Valid UserProfilePwdForm profilepwd, BindingResult bindingResult) {
+			@Valid UserProfilePwdForm profilepwd) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			String getUserpwd = userService.getPwd(user.getStudentld());
 			if (getUserpwd != null & bCryptPasswordEncoder.matches(profilepwd.getOldpwd(), getUserpwd)) {
-				if(bindingResult.hasErrors() || !profilepwd.getNewpwd().equals(profilepwd.getConfirmpwd())){
+				if(!profilepwd.getNewpwd().equals(profilepwd.getConfirmpwd())){
 					map.put("data", "error");
 				}else{
 					user.setPassword(bCryptPasswordEncoder.encode(profilepwd.getNewpwd()));
@@ -98,11 +94,8 @@ public class UserProfileController extends BaseController{
 	//修改个人信息
 	@PostMapping("/profile_basic")
 	public @ResponseBody Map<String, Object> updateBasic(HttpServletRequest request, 
-			@Valid UserProfileInfoForm profileinfo, BindingResult bindingResult) {
+			@Valid UserProfileInfoForm profileinfo) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			if(bindingResult.hasErrors()){
-				map.put("data", "error");
-			}else{
 				user.setAddress(profileinfo.getAddress());
 				user.setUsername(profileinfo.getName());
 				user.setBirthday(profileinfo.getBirth());
@@ -111,7 +104,6 @@ public class UserProfileController extends BaseController{
 				user.setSex(profileinfo.getSex());
 				userService.update(user);
 				map.put("data", "success");
-			}
 		return map;
 	}
 }

@@ -60,8 +60,8 @@ $(".register_btn").click(function(){
 	}else{
 		var url = $(this).parents("form").attr("action");
 		var data = $(this).parents("form").serialize();
-		$.post(url, data, function(result){
-			var json = $.parseJSON(result);
+		$.post(url, data, function(data){
+/*			var json = $.parseJSON(result);
 			$.each(json, function(idx, obj){
 				if(obj.message == "success"){
 					$(".card-signup").removeClass("form_toggle");
@@ -82,7 +82,35 @@ $(".register_btn").click(function(){
 				            //showCloseButton: true
 				        });
 				}
-			});
+			});*/
+			console.log(data.data)
+			if(data.data == "success"){
+				$(".card-signup").removeClass("form_toggle");
+				$("[name='login_Form']").addClass("form_toggle");
+				$("*[name='register_Form']").find("input").val("");
+				 $.globalMessenger().post({
+			            message: "注册成功",
+			            hideAfter: 2,
+			            type: 'success',
+			            //showCloseButton: true
+			        });
+				 $(".register_validate").data('bootstrapValidator').resetForm();
+			}else if(data.data == "userExists"){
+				 $.globalMessenger().post({
+			            message: "用户名已存在，请重新输入！",
+			            hideAfter: 2,
+			            type: 'error',
+			            //showCloseButton: true
+			        });
+			}else{
+				$.globalMessenger().post({
+		            message: "验证错误，请检查后重新输入",
+		            hideAfter: 2,
+		            type: 'error',
+		            //showCloseButton: true
+		        });
+			}
+			
 		});
 	}
 });
@@ -127,7 +155,7 @@ $(".login_btn").click(function(){
 
 $('.forget_btn').click(function() {
 	  $.post("/check_vercode",{"findemail" : $("*[name='forget_Form']").find("*[name='email']").val(), "vercode" : $("*[name='code']").val()},function(data){
-    	  if(data.msg == "code success"){
+    	  if(data.data == "success"){
     			 $.globalMessenger().post({
     		            message: "验证通过",
     		            hideAfter: 2,
@@ -143,7 +171,7 @@ $('.forget_btn').click(function() {
  				$("*[name='forget_Form']").find("*[name='email']").val("");
  				$("*[name='code']").val("");
  				$(".forget_validate").data('bootstrapValidator').resetForm();
-    	  }else if(data.msg == "code error"){
+    	  }else if(data.data == "error"){
     			 $.globalMessenger().post({
     		            message: "验证错误，请重新输入",
     		            hideAfter: 2,
@@ -162,7 +190,7 @@ function updatepassword(account){
 	var upaccount = account;
 	$('.change_btn2').click(function() {
 		  $.post("/check_updatepwd",{"cuppwd" : $("#CUpPwd").val(), "cuprepwd" : $("#CUpRePwd").val(), "upaccount" : upaccount},function(data){
-	    	  if(data.msg == "update success"){
+	    	  if(data.data == "success"){
 	    			 $.globalMessenger().post({
 	    		            message: "修改成功",
 	    		            hideAfter: 2,
@@ -177,7 +205,7 @@ function updatepassword(account){
 	    				$("#CUpPwd").val("");
 	    				$("#CUpRePwd").val("");
 	    				$(".change_password_validate").data('bootstrapValidator').resetForm();
-	    	  }else if(data.msg == "update error"){
+	    	  }else if(data.data == "error"){
 	    			 $.globalMessenger().post({
 	    		            message: "验证错误，请重新输入",
 	    		            hideAfter: 2,

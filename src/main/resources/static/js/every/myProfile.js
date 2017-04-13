@@ -21,7 +21,7 @@ $('#authentication').click(function() {
 		        });
 	}else{
 		  $.post("/profile_authentication",{"phone" : $('#phone').val(), "email" : $('#email').val()},function(data){
-	    	  if(data.msg == "success"){
+	    	  if(data.data == "success"){
 				  $('.loginAfter').css('display','block');
 	    	      $('.loginBefore').css('display','none');
 	    	  	  $("#myphone").html(data.phone);
@@ -38,7 +38,7 @@ $('#authentication').click(function() {
 			          type: 'success',
 			            //showCloseButton: true
 			      });
-			  }else if(data.msg == "error"){
+			  }else if(data.data == "error"){
 	  			 $.globalMessenger().post({
 	  		            message: "验证错误，请重新输入！",
 	  		            hideAfter: 2,
