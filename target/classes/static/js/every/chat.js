@@ -6,6 +6,8 @@ var thisUser = null;
 var outputname = "111111";
 var message = null;
 var stompClient = null;
+var outputImg = null;
+var inputImg = null;
 
 window.onload = function() {
 	
@@ -53,6 +55,12 @@ window.onload = function() {
 	    		  }
 	    	  }
     	  }
+    	  
+    	  
+    	  if(data.outputname != "null"){
+    		  outputname = data.outputname;
+    		  getMessage();
+    	  }
 		  });
 	
 	WebsocketInit();
@@ -60,7 +68,7 @@ window.onload = function() {
 
 $(function () {
     $("form").on('submit', function (e) {
-        e.preventDefault();
+        //e.preventDefault();
     });
     $( "#send" ).click(function() { 
     	message = $('textarea[type="text"]').val();
@@ -71,8 +79,7 @@ $(function () {
 
 
 function sendName() {
-	console.log("111");
-	$('.lv-item.media.chat:last').after('<div class="lv-item media chat right"><div class="lv-avatar pull-right"><img src="images/tou.jpg" alt=""></div><div class="media-body"><div class="ms-item">' + message + '</div></div></div>');
+	$('.lv-item.media.chat:last').after('<div class="lv-item media chat right"><div class="lv-avatar pull-right"><img src="http://oihey4yi1.bkt.clouddn.com/'+ inputImg +'" alt=""></div><div class="media-body"><div class="ms-item">' + message + '</div></div></div>');
     stompClient.send("/app/" + "sendChat", {}, JSON.stringify({'inputname': thisUser, 'outputname' : outputname, 'message' : message}));
     $('.lv-body.chat').scrollTop( $('.lv-body.chat')[0].scrollHeight );
     $('textarea[type="text"]').val('');
@@ -99,15 +106,15 @@ function WebsocketInit(){
     var socket = new SockJS('/websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
+        //console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/' + thisUser, function (greeting) {
-        	console.log("11------------------" + greeting.body);
+        	//console.log("11------------------" + greeting.body);
         	var obj = JSON.parse(greeting.body);
     		var state = null;
-    		console.log(obj.Inname);
+    		//console.log(obj.Inname);
     		if($('.lv-item.media.user.active').find(".hidden_text").text() == obj.Inname){
     			state = "1";
-    			$('.lv-item.media.chat:last').after('<div class="lv-item media chat"><div class="lv-avatar pull-left"><img src="images/tou.jpg" alt=""></div><div class="media-body"><div class="ms-item">' + obj.message + '</div></div></div>');
+    			$('.lv-item.media.chat:last').after('<div class="lv-item media chat"><div class="lv-avatar pull-left"><img src="http://oihey4yi1.bkt.clouddn.com/'+ outputImg +'" alt=""></div><div class="media-body"><div class="ms-item">' + obj.message + '</div></div></div>');
     			$('.lv-body.chat').scrollTop( $('.lv-body.chat')[0].scrollHeight );
     		}else{
     			state = "-1";
@@ -130,27 +137,35 @@ $('.test').click(function(){
 });
 
 $('.listview.lv-user').click(function(e){
+	outputname = $(this).find(".hidden_text").text();
+	$(".lvh-label.hidden-xs").empty();
+	getMessage();
+});
+
+function getMessage(){
+	var outputUsername = $(this).find(".outUsername").text();
 	$('textarea[type="text"]').focus();
 	$('.lv-item.media.user.active').removeClass("active");
-	$(this).find(".lv-item.media.user.unread").removeClass("unread");
-	$(this).find(".lv-item.media.user").addClass("active");
-	outputname = $(this).find(".hidden_text").text();
+	$("*[name="+outputname+"]").closest('.listview.lv-user').find(".lv-item.media.user.unread").removeClass("unread");
+	$("*[name="+outputname+"]").closest('.listview.lv-user').find(".lv-item.media.user").addClass("active");
 	
 	$(".lv-body.chat").empty();
 	$(".lv-body.chat").append('<div class="lv-item media chat"></div>');
 	
-	
 	  $.post("/get_message",{"inputname" : thisUser, "outputname" : outputname},function(data){
+  		outputImg = data.outputImg;
+		inputImg = data.inputImg;
 			for(var item in data.message){
 	    		  if(data.thisUser[item] == thisUser){
-	    			  $('.lv-item.media.chat:last').after('<div class="lv-item media chat right"><div class="lv-avatar pull-right"><img src="images/tou.jpg" alt=""></div><div class="media-body"><div class="ms-item">' + data.message[item] + '</div><small class="ms-date"><i class="material-icons">access_time</i> '+ data.thisTime[item] +'</small></div></div>');
+	    			  $('.lv-item.media.chat:last').after('<div class="lv-item media chat right"><div class="lv-avatar pull-right"><img src="http://oihey4yi1.bkt.clouddn.com/'+ inputImg +'" alt=""></div><div class="media-body"><div class="ms-item">' + data.message[item] + '</div><small class="ms-date"><i class="material-icons">access_time</i> '+ data.thisTime[item] +'</small></div></div>');
 	    		  }else{
-	    			  $('.lv-item.media.chat:last').after('<div class="lv-item media chat"><div class="lv-avatar pull-left"><img src="images/tou.jpg" alt=""></div><div class="media-body"><div class="ms-item">' + data.message[item] + '</div><small class="ms-date"><i class="material-icons">access_time</i> '+ data.thisTime[item] +'</small></div></div>');
+	    			  $('.lv-item.media.chat:last').after('<div class="lv-item media chat"><div class="lv-avatar pull-left"><img src="http://oihey4yi1.bkt.clouddn.com/'+ outputImg +'" alt=""></div><div class="media-body"><div class="ms-item">' + data.message[item] + '</div><small class="ms-date"><i class="material-icons">access_time</i> '+ data.thisTime[item] +'</small></div></div>');
 	    		  }	  
 			}
 			$('.lv-body.chat').scrollTop( $('.lv-body.chat')[0].scrollHeight );
+			$(".lvh-label.hidden-xs").append('<div class="lv-avatar pull-left"><img src="http://oihey4yi1.bkt.clouddn.com/'+ outputImg +'" alt=""> </div><span class="c-black">' + outputUsername + '</span>');
 		  });
 	
 	
 	  $.post("/save_state",{"inputname" : outputname, "outputname" : thisUser,"state" : "1"},function(data){});
-});
+}

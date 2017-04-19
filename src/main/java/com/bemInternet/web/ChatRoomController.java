@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,12 +42,15 @@ public class ChatRoomController extends BaseController{
 	@Autowired
 	private ChatService chatService;
 	
+	private String receiver = null;		//设置全局接收人
+	
 	@Resource
     private SimpMessagingTemplate simpMessagingTemplate; 
 	
     @GetMapping("/chatRoom")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public String ChatIndex(Model model){
+    	receiver = null;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		user = userService.findUserByStudentld(auth.getName());
 		List<User> Friends = chatService.QueryFriendsList(user);
@@ -55,14 +59,45 @@ public class ChatRoomController extends BaseController{
     	return "chatRoom";
     }
     
+    /**
+     * 班级成员加载聊天界面
+     * @param model
+     * @param getchat
+     * @return
+     */
+	@GetMapping("/load_chatRoom/{studentld}")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+	public String load_chatRoom(Model model, @PathVariable String studentld){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		user = userService.findUserByStudentld(auth.getName());
+		List<User> Friends = chatService.QueryFriendsList(user);
+		model.addAttribute("posts", Friends);
+		model.addAttribute("users", user);
+		receiver = studentld;
+		return "chatRoom";
+	}
+    
 	@PostMapping("/initialization")
     public @ResponseBody Map<String, Object> get_user() throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		user = userService.findUserByStudentld(auth.getName());
+		if(user == null){
+			System.err.println("null");
+			map.put("noLogin", "noLogin");
+		}else{
 		map.put("thisUser", user.getStudentld());
 		List<String> unreadUser = chatService.QueryMessageState(user.getStudentld());
 		List<String> unreadUserNull = chatService.QueryMessageStateNull(user.getStudentld());
 		map.put("unreadUser", unreadUser);
 		map.put("unreadUserNull", unreadUserNull);
+		map.put("msgTotal", unreadUser.size() + unreadUserNull.size());
+		if(receiver != null){
+			map.put("outputname", receiver);
+		}else{
+			map.put("outputname", "null");
+		}
+		}
 		return map;
     }
 	

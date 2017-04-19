@@ -47,7 +47,7 @@
 					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
 					<li class="dropdown" id="info-btn">
 						<a href="javascript:void(0);">
-							<i class="material-icons">notifications</i><span class="tmn-counts">2</span>
+							<i class="material-icons">notifications</i>
 						</a>
 						<div class="dropdown-menu dropMenu pull-right" id="info">
 							<div class="lv-header">消息提醒</div>
@@ -133,7 +133,7 @@
 				<li class="btn btn-default"><a href="#"><i class="material-icons">message</i>班级公告</a></li>
 				<li class="btn btn-default"><a th:href="@{/classPhoto}"><i class="material-icons">image</i>班级相册</a></li>
 				<li class="btn btn-default"><a th:href="@{/party}"><i class="material-icons">supervisor_account</i>班级聚会</a></li>
-				<li class="btn btn-default"><a href="#"><i class="material-icons">supervisor_account</i>班级成员</a></li>
+				<li class="btn btn-default"><a th:href="@{/members}"><i class="material-icons">supervisor_account</i>班级成员</a></li>
 				<li class="btn btn-default"><a href="#"><i class="material-icons">file_download</i>资料分享</a></li>
 				<li class="btn btn-default"><a href="#"><i class="material-icons">swap_horiz</i>留言反馈</a></li>
 			</ul>
@@ -305,7 +305,7 @@
 					</div><!--dataShare-card end-->
 				</a><!--dataShare end-->
 
-				<a href="#" class="member-action pd8 m-plr-16 flip-action-X"><!--班级成员-->
+				<a th:href="@{/members}" class="member-action pd8 m-plr-16 flip-action-X"><!--班级成员-->
 					<div class="flip-card c-shadow">
 						<div class="flip member"></div>
 						<div class="flip-info member flip-method-X">班级成员</div>
@@ -373,5 +373,6 @@
 		jQuery(".slideTxtBox").slide({effect:"top",autoPlay:true,delayTime:2000});
 		jQuery(".NoticeInfo").slide({effect:"fold",autoPlay:true});
 	</script>
+	<script src="js/every/globalChat.js"></script>
 </body>
 </html>

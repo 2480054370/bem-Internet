@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,10 +42,20 @@ public class IndexController extends BaseController{
 		return "index";
 	}
 	
+	@GetMapping("/oProfile/{studentld}")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+	public String findOne(@PathVariable String studentld, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		user = userService.findUserByStudentld(studentld);
+		model.addAttribute("user", user);
+		return "profile";
+	}
+	
 	@GetMapping("/403")
     public String forbidden(){
         return "403";
     }
+	
 	
 	// 上传头像
 	@PostMapping("/uploadAvatar")

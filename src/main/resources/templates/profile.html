@@ -4,14 +4,14 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<title>个人设置</title>
-	<link rel="shortcut icon" href="fonts/favicon.ico">	
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/bootstrap-material-design.min.css">
-	<link rel="stylesheet" href="css/ripples.min.css">
-	<link rel="stylesheet" href="css/material-icons.css">	
-	<link rel="stylesheet" href="css/framework.css"><!--头的架设-->
-	<link rel="stylesheet" href="css/style.css">
+	<title>我的账户</title>
+	<link rel="shortcut icon" th:href="@{/fonts/favicon.ico}">	
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/bootstrap-material-design.min.css}">
+	<link rel="stylesheet" th:href="@{/css/ripples.min.css}">
+	<link rel="stylesheet" th:href="@{/css/material-icons.css}">	
+	<link rel="stylesheet" th:href="@{/css/framework.css}"><!--头的架设-->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 	<!--[if IE]>
 		<script src="../static/http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -55,7 +55,7 @@
                 <a class="lv-item" href="javascript:void(0);">
                   <div class="media">
                     <div class="pull-left">
-                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                      <img class="lv-img-sm" th:src="@{/images/1.jpg}" alt="">
                     </div>
                     <div class="media-body">
                       <div class="lv-title">David Belle</div>
@@ -66,7 +66,7 @@
                 <a class="lv-item" href="javascript:void(0);">
                   <div class="media">
                     <div class="pull-left">
-                      <img class="lv-img-sm" src="images/1.jpg" alt="">
+                      <img class="lv-img-sm" th:src="@{/images/1.jpg}" alt="">
                     </div>
                     <div class="media-body">
                       <div class="lv-title">David Belle</div>
@@ -149,7 +149,7 @@
 			<div class="block-header">
 				<ol class="breadcrumb">
 				  <li><a href="index.html">首页</a></li>				  
-				  <li class="active">个人资料设置</li>
+				  <li class="active">个人资料</li>
 				</ol>				
 				<!-- <a href="javascript:void(0)" class="btn btn-info party-launch-btn pull-right">添加照片</a> -->
 			</div><!--block-header end-->
@@ -163,7 +163,7 @@
 	      						<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="1"/>
 	    					</svg>
 	  					</div> 
-						<img id="bannerimg" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.backimgfile}__}" alt="">
+						<img id="bannerimg" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.backimgfile}__}"  alt="">
 						<a href="#" class="change-banner"><i class="material-icons">photo_camera</i></a>
 						<input id="uploadFile2" type="file" name="file2" class="change-banner" style="opacity: 0;z-index: 10;" value="" />
 					</div>
@@ -180,90 +180,81 @@
 					    <input id="uploadFile" type="file" name="file" class="change-headimg" style="opacity: 0;z-index: 10;" value="" />
 					</form>
 					</div><!--myProfile-img-div end-->
-					<div class="myProfile-name"><span th:text="${user.username}"></span></div>
+					<div class="myProfile-name"><span id="myusernametop" th:text="${user.username}"></span></div>
 				</div><!--myProfile-header end-->
 				
 				<div class="col-md-6 col-sm-6 pd8">
 					<div class="card myProfile-card c-shadow">
-						<form action="" class="form-body">
+						<form action="">
 							<div class="card-header">
-                <h5><i class="material-icons">playlist_add_check</i><span>信息设置</span></h5>
+                <h5><i class="material-icons">account_circle</i><span>信息认证</span></h5>
+                <div class="dropdown party-menu myProfile-menu">
+								  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"> 
+								    <i class="material-icons">more_vert</i>
+								  </button>
+								  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+								    <li><a href="#" class="text-center">修改</a></li>
+								    <li><a href="#" class="text-center">删除</a></li>
+								  </ul>
+								</div>
               </div><!--card-header end-->
               <div class="card-body">
-              	<div class="form-group row">
-							    <label for="purview1" class="purview_label">手机：</label>
-							    <select id="purview1" class="select form-control">
-							      <option th:value="${user.cfphonenumber}"><span th:text="${user.cfphonenumber}"></span></option>
-							    </select>
-							  </div><!--form-group end-->
-							  <div class="form-group row">
-							    <label for="purview2" class="purview_label">地址：</label>
-							    <select id="purview2" class="select form-control">
-							      <option th:value="${user.cfaddress}"><span th:text="${user.cfaddress}"></span></option>
-							    </select>
-							  </div><!--form-group end-->
-							  <div class="form-group row">
-							    <label for="purview3" class="purview_label">生日：</label>
-							    <select id="purview3" class="select form-control">
-							      <option th:value="${user.cfbirthday}"><span th:text="${user.cfbirthday}"></span></option>
-							    </select>
-							  </div><!--form-group end-->
-							  <div class="form-group row">
-							    <label for="purview4" class="purview_label">性别：</label>
-							    <select id="purview4" class="select form-control">
-							      <option th:value="${user.cfsex}"><span th:text="${user.cfsex}"></span></option>
-							    </select>
-							  </div><!--form-group end-->
-							  <div class="form-group row">
-							    <label for="purview5" class="purview_label">爱好：</label>
-							    <select id="purview5" class="select form-control">
-							      <option th:value="${user.cfhobby}"><span th:text="${user.cfhobby}"></span></option>
-							    </select>
-							  </div><!--form-group end-->
+                <p>
+                  <label>手机：</label>
+                  <span id="myphone" th:text="${user.phonenumber}"></span>
+                </p>
+                <p>
+                  <label>邮箱：</label>
+                  <span id="myemail" th:text="${user.usermail}"></span>
+                </p>
               </div><!--card-body end-->
-              <div class="button-label">
-	            	<button id="infoconfig" type="button" class="btn join-party">保存</button>
-	            </div>
 						</form>
 					</div><!--card end-->
 				</div><!--col-md-6 end-->
 				<div class="col-md-6 col-sm-6 pd8">
 					<div class="card myProfile-card c-shadow">
-						<form action="" class="form-body">
+						<form action="">
 							<div class="card-header">
-                <h5><i class="material-icons">notifications_active</i><span>消息提醒</span></h5>
+                <h5><i class="material-icons">assignment</i><span>基本信息</span></h5>
+                <div class="dropdown party-menu myProfile-menu">
+								  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"> 
+								    <i class="material-icons">more_vert</i>
+								  </button>
+								  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+								    <li><a href="#" class="text-center">修改</a></li>
+								    <li><a href="#" class="text-center">删除</a></li>
+								  </ul>
+								</div>
               </div><!--card-header end-->
               <div class="card-body">
-							  <div class="form-group row">
-							    <label class="purview_label">接收新消息通知</label>
-								  <div class="togglebutton pull-right">
-					          <label><input id="checkbox1" th:value="${user.cfinfo}" type="checkbox"></label>
-					        </div><!--togglebutton end-->
-					      </div><!--form-group end-->
-					      <div class="form-group row">
-							    <label class="purview_label">班级相册更新提醒</label>
-								  <div class="togglebutton pull-right">
-					          <label><input id="checkbox2" th:value="${user.cfphoto}" type="checkbox"></label>
-					        </div><!--togglebutton end-->
-					      </div><!--form-group end-->
-					      <div class="form-group row">
-							    <label class="purview_label">班级公告更新提醒</label>
-								  <div class="togglebutton pull-right">
-					          <label><input id="checkbox3" th:value="${user.cfreport}" type="checkbox"></label>
-					        </div><!--togglebutton end-->
-					      </div><!--form-group end-->
-					      <div class="form-group row">
-							    <label class="purview_label">邮箱提醒</label>
-								  <div class="togglebutton pull-right">
-					          <label><input id="checkbox4" th:value="${user.cfmail}" type="checkbox"></label>
-					        </div><!--togglebutton end-->
-					      </div><!--form-group end-->
+                <p>
+                  <label>地址：</label>
+                  <span id="myaddress" th:text="${user.address}"></span>
+                </p>
+                <p>
+                  <label>姓名：</label>
+                  <span id="myusername" th:text="${user.username}"></span>
+                </p>
+                <p>
+                  <label>性别：</label>
+                  <span id="mysex" th:text="${user.sex}"></span>
+                </p>
+                <p>
+                  <label>生日：</label>
+                  <span id="mybirthday" th:text="${user.birthday}"></span>
+                </p>
+                <p>
+                  <label>爱好：</label>
+                  <span id="myhobby" th:text="${user.hobby}"></span>
+                </p>
+                <p>
+                  <label>宣言：</label>
+                  <span id="mysign" th:text="${user.saying}"></span>
+                </p>
               </div><!--card-body end-->
-              <div class="button-label">
-	            	<button id="messagenotify" type="button" class="btn join-party">保存</button>
-	            </div>
 						</form>
 					</div><!--card end-->
+					<!-- 初始状态 -->
 				</div><!--col-md-6 end-->
 			</div><!--myContainer end-->
 		</div><!--container end-->
@@ -326,36 +317,37 @@
     </ul>
 	</div><!--footer end-->
 	
-	<script src="js/jquery-1.11.3.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/material.min.js"></script>
-	<script src="js/ripples.min.js"></script>
+	<script th:src="@{/js/jquery-1.11.3.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/material.min.js}"></script>
+	<script th:src="@{/js/ripples.min.js}"></script>
 	<script>$.material.init()</script>
 	<!--menu-icon-wrapper-->
-	<link rel="stylesheet" type="text/css" href="js/menu-icon/normalize.css" />
-	<link rel="stylesheet" type="text/css" href="js/menu-icon/component.css" />
-	<script src="js/menu-icon/segment.min.js"></script>
-	<script src="js/menu-icon/ease.min.js"></script>
-	<script src="js/menu-icon/main.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/js/menu-icon/normalize.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/js/menu-icon/component.css}" />
+	<script th:src="@{/js/menu-icon/segment.min.js}"></script>
+	<script th:src="@{/js/menu-icon/ease.min.js}"></script>
+	<script th:src="@{/js/menu-icon/main.js}"></script>
 	<!--menu-icon-wrapper end-->
-	<script src="js/header_main.js"></script><!--header按钮响应-->
+	<script th:src="@{/js/header_main.js}"></script><!--header按钮响应-->
 	<!--messenger-->
-	<link rel="stylesheet" href="js/messenger/messenger.css">
-	<link rel="stylesheet" href="js/messenger/messenger-theme-future.css">
-	<script src="js/messenger/messenger.min.js"></script>
+	<link rel="stylesheet" th:href="@{/js/messenger/messenger.css}">
+	<link rel="stylesheet" th:href="@{/js/messenger/messenger-theme-future.css}">
+	<script th:src="@{/js/messenger/messenger.min.js}"></script>
 	<!--messenger end-->
-	<!-- dropdown -->
-	<link rel="stylesheet" href="js/dropdown/jquery.dropdown.css">
-	<script src="js/dropdown/jquery.dropdown.js"></script>
-	<script>$(document).ready(function() {$(".select").dropdown({"optionClass": "withripple"});});</script>
-	<!-- dropdown end -->
+	<!--validator-->
+	<link rel="stylesheet" th:href="@{/js/validator/bootstrapValidator.min.css}"/>
+	<script type="text/javascript" th:src="@{/js/validator/bootstrapValidator.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/validator/zh_CN.js}"></script>
+	<script th:src="@{/js/validator/initialize.js}"></script>
+	<!-- validator end -->
 	<!--change_head_img-->
-	<link href="js/change_head_img/cropper/cropper.min.css" rel="stylesheet">
-	<link href="js/change_head_img/sitelogo/sitelogo.css" rel="stylesheet">
-	<script src="js/change_head_img/cropper/cropper.min.js"></script>
-	<script src="js/change_head_img/sitelogo/sitelogo.js"></script>
+	<link th:href="@{/js/change_head_img/cropper/cropper.min.css}" rel="stylesheet">
+	<link th:href="@{/js/change_head_img/sitelogo/sitelogo.css}" rel="stylesheet">
+	<script th:src="@{/js/change_head_img/cropper/cropper.min.js}"></script>
+	<script th:src="@{/js/change_head_img/sitelogo/sitelogo.js}"></script>
 	<!--change_head_img end-->
-	<script src="js/every/myConfig.js"></script>
-	<script src="js/jquery.form.js"></script>
+
+	<script th:src="@{/js/jquery.form.js}"></script>
 </body>
 </html>
