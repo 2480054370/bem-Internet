@@ -30,9 +30,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bemInternet.Service.ChatService;
 import com.bemInternet.Service.PartyService;
 import com.bemInternet.Service.PhotoService;
 import com.bemInternet.Service.UserService;
+import com.bemInternet.domain.Chat;
 import com.bemInternet.domain.PartyArticle;
 import com.bemInternet.domain.PartyContact;
 import com.bemInternet.domain.PartyPhoto;
@@ -47,6 +49,9 @@ public class PartyController extends BaseController{
 	
 	@Autowired
 	private PartyService partyService;
+	
+	@Autowired
+	private ChatService chatService;
 
 	@PostMapping("/party_tab")
 	public @ResponseBody Map<String, Object> party_tab(Model model, @Valid GetPartyForm getparty){
@@ -67,6 +72,8 @@ public class PartyController extends BaseController{
 	public String show(Model model, HttpServletRequest request){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		user = userService.findUserByStudentld(auth.getName());
+		List<Chat> message = chatService.QueryMessageState(auth.getName());
+		model.addAttribute("message", message);
 		model.addAttribute("users", user);
 		List<PartyArticle> list = partyService.fillAllPersonal(user.getId());
 		PartyContact contact = partyService.findContact("123");

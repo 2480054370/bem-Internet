@@ -30,11 +30,8 @@ public class ChatServicelmpl implements ChatService{
 		return chatDao.SaveMessageState(inputUser, outputUser);
 	}
 	
-	public List<String> QueryMessageState(String outputname){
+	public List<Chat> QueryMessageState(String outputname){
 		return chatDao.QueryMessageState(outputname);
 	}
 	
-	public List<String> QueryMessageStateNull(String outputname){
-		return chatDao.QueryMessageStateNull(outputname);
-	}
 }

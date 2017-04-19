@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bemInternet.Service.ChatService;
 import com.bemInternet.Service.UserService;
+import com.bemInternet.domain.Chat;
 import com.bemInternet.domain.User;
 import com.bemInternet.utils.FileUploadUtils;
 
@@ -34,10 +36,15 @@ public class IndexController extends BaseController{
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private ChatService chatService;
+	
 	@GetMapping(value = {"/", "/index"})
 	public String loginHtml(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		user = userService.findUserByStudentld(auth.getName());
+		List<Chat> message = chatService.QueryMessageState(auth.getName());
+		model.addAttribute("message", message);
 		model.addAttribute("user", user);
 		return "index";
 	}

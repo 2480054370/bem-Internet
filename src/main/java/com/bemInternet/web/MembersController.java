@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.bemInternet.Service.ChatService;
 import com.bemInternet.Service.MembersService;
 import com.bemInternet.Service.UserService;
+import com.bemInternet.domain.Chat;
 import com.bemInternet.domain.User;
 import com.bemInternet.form.GetChatForm;
 
@@ -26,6 +27,9 @@ public class MembersController extends BaseController{
 	private UserService userService;
 
 	@Autowired
+	private ChatService chatService;
+	
+	@Autowired
 	private MembersService membersService;
 	
 	@GetMapping("members")
@@ -34,6 +38,8 @@ public class MembersController extends BaseController{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		user = userService.findUserByStudentld(auth.getName());
 		List<User> Members = membersService.QueryFriendsList(user);
+		List<Chat> message = chatService.QueryMessageState(auth.getName());
+		model.addAttribute("message", message);
 		model.addAttribute("user", user);
 		model.addAttribute("posts", Members);
 		return "member";

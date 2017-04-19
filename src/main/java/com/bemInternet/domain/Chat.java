@@ -16,7 +16,9 @@ public class Chat {
     private String message;
     private String state;
     private String sendtime;
-    
+    private String inputusername;
+    private String outputusername;
+    private String outputImg;
 
     public Chat() {
     }
@@ -65,6 +67,30 @@ public class Chat {
 
 	public void setSendtime(String sendtime) {
 		this.sendtime = sendtime;
+	}
+
+	public String getInputusername() {
+		return inputusername;
+	}
+
+	public void setInputusername(String inputusername) {
+		this.inputusername = inputusername;
+	}
+
+	public String getOutputusername() {
+		return outputusername;
+	}
+
+	public void setOutputusername(String outputusername) {
+		this.outputusername = outputusername;
+	}
+
+	public String getOutputImg() {
+		return outputImg;
+	}
+
+	public void setOutputImg(String outputImg) {
+		this.outputImg = outputImg;
 	}
 	
 

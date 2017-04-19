@@ -29,7 +29,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bemInternet.Service.ChatService;
 import com.bemInternet.Service.UserService;
+import com.bemInternet.domain.Chat;
 import com.bemInternet.domain.User;
 import com.bemInternet.form.UserProfileForm;
 import com.bemInternet.form.UserProfileInfoForm;
@@ -44,6 +46,9 @@ public class UserProfileController extends BaseController{
 	private UserService userService;
 	
 	@Autowired
+	private ChatService chatService;
+	
+	@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@GetMapping("/profile")
@@ -51,6 +56,8 @@ public class UserProfileController extends BaseController{
 	public String Profile(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		user = userService.findUserByStudentld(auth.getName());
+		List<Chat> message = chatService.QueryMessageState(auth.getName());
+		model.addAttribute("message", message);
 		model.addAttribute("user", user);
 		return "myProfile";
 	}

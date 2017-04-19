@@ -103,7 +103,7 @@
                     </div>
                   </div>
                   <div class="myshow">
-                    <div class="myname"></div><span th:text="${users.username}"></span></div>
+                    <div class="myname"><span th:text="${users.username}"></span></div>
                     <div class="Email"><span th:text="${users.usermail}"></span></div>
                     <div class="signature"><span th:text="${users.saying}"></span></div>
                     <a class="btn user-myprofile" th:href="@{/profile}">我的账户</a>
@@ -242,6 +242,7 @@
             <div class="lv-item media user">
               <div class="lv-avatar pull-left">
                 <img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${post.headimgfile}__}" alt="">
+                <span id="outputImg" hidden="hidden" th:text="${post.headimgfile}"></span>
               </div>
               <div class="media-body">
                 <div class="lv-title"><span class="outUsername" th:text="${post.username}"></span><span class="hidden_text" hidden th:text="${post.studentld}" th:name="${post.studentld}"></span></div>
@@ -448,6 +449,7 @@
 	<!-- chat -->
 	<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
     <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+    <script th:src="@{/js/every/globalJs.js}"></script>
 	<script th:src="@{/js/every/chat.js}"></script>
 	<script>
 		$('#summernote').summernote({

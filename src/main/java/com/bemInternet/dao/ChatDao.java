@@ -76,12 +76,11 @@ public class ChatDao {
 		return list;
 	}
 	
-	//查询当前的状态（在线）
-	public List<String> QueryMessageState(String outputname){
+	//查询当前的状态
+	public List<Chat> QueryMessageState(String outputname){
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<String> criteria = builder.createQuery(String.class);
+		CriteriaQuery<Chat> criteria = builder.createQuery(Chat.class);
 		Root<Chat> root = criteria.from(Chat.class);
-		criteria.select(root.get("inputname"));
 		Predicate personRestriction = builder.and(
 				builder.equal(root.get("state"), "-1")
 			);
@@ -89,25 +88,9 @@ public class ChatDao {
 			    builder.equal(root.get("outputname"), outputname)
 			);
 		criteria.where(builder.and( personRestriction, partnerRestriction ));
-		List<String> list = entityManager.createQuery(criteria).getResultList();
+		List<Chat> list = entityManager.createQuery(criteria).getResultList();
 		return list;
 	}
 	
-	//查询当前状态（不在线）
-	public List<String> QueryMessageStateNull(String outputname){
-		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<String> criteria = builder.createQuery(String.class);
-		Root<Chat> root = criteria.from(Chat.class);
-		criteria.select(root.get("inputname"));
-		Predicate personRestriction = builder.and(
-				builder.equal(root.get("state"), "-2")
-			);
-		Predicate partnerRestriction = builder.and(
-			    builder.equal(root.get("outputname"), outputname)
-			);
-		criteria.where(builder.and( personRestriction, partnerRestriction ));
-		List<String> list = entityManager.createQuery(criteria).getResultList();
-		return list;
-	}
 }
 

@@ -45,36 +45,26 @@
 			<li class="pull-right">
 				<ul class="top-menu">
 					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
-					<li class="dropdown" id="info-btn" name="info-login"><a href="javascript:void(0);"><i class="material-icons">notifications</i></a>
+										<li class="dropdown" id="info-btn">
+						<a href="javascript:void(0);">
+							<i class="material-icons">notifications</i>
+						</a>
 						<div class="dropdown-menu dropMenu pull-right" id="info">
-							 <div class="lv-header">
-                  消息提醒                  
-              </div>
-              <div class="lv-body">                  
-                <a class="lv-item" href="javascript:void(0);">
-                    <div class="media">
-                        <div class="pull-left">
-                            <img class="lv-img-sm" src="images/1.jpg" alt="">
-                        </div>
-                        <div class="media-body">
-                            <div class="lv-title">David Belle</div>
-                            <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
-                        </div>
+							<div class="lv-header">消息提醒</div>
+              <div id="msgNotice" class="lv-body" th:if="${not #lists.isEmpty(message)}" th:each="listmsg:${message}">               
+                <a class="lv-item" th:href="@{/load_chatRoom/{studentld}(studentld=${listmsg.inputname})}">
+                  <div class="media">
+                    <div class="pull-left">
+                      <img class="lv-img-sm" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${listmsg.outputImg}__}" alt="">
                     </div>
-                </a>
-                <a class="lv-item" href="javascript:void(0);">
-                    <div class="media">
-                        <div class="pull-left">
-                            <img class="lv-img-sm" src="images/1.jpg" alt="">
-                        </div>
-                        <div class="media-body">
-                            <div class="lv-title">David Belle</div>
-                            <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
-                        </div>
+                    <div class="media-body">
+                      <div class="lv-title"><span th:text="${listmsg.inputusername}"></span></div>
+                      <small class="lv-small"><span th:text="${listmsg.message}"></span></small>
                     </div>
+                  </div>
                 </a>
               </div>
-              <div style="overflow: hidden;"><a class="lv-footer" href="javascript:void(0);">所有消息</a></div>
+              <div style="overflow: hidden;"><a id="clearNotice" class="lv-footer" href="javascript:void(0);">全部已读</a></div>
 						</div><!--dropdown-menu end-->
 					</li>
 					<li class="hidden-xs chat-btn"><a href="javascript:void(0);" id="chat-btn"><i class="material-icons">comment</i></a></li>
@@ -91,14 +81,14 @@
               <div class="lv-body">
                 <div class="myInfo">
                   <div class="myphoto"> 
-                    <div class="userhead" data-type="update_avatar"> 
+                    <div class="userhead" data-type="update_avatar">
                       <a th:href="@{/profile}" style="display:block;">
 	                      <img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${users.headimgfile}__}" alt="">
                       </a>
                     </div>
                   </div>
                   <div class="myshow">
-                    <div class="myname"></div><span th:text="${users.username}"></span></div>
+                    <div class="myname"><span th:text="${users.username}"></span></div>
                     <div class="Email"><span th:text="${users.usermail}"></span></div>
                     <div class="signature"><span th:text="${users.saying}"></span></div>
                     <a class="btn user-myprofile" th:href="@{/profile}">我的账户</a>
@@ -643,6 +633,8 @@
 	<script th:src="@{js/classPhoto/main.js}"></script>
 	<script th:src="@{js/classPhoto/other.js}"></script>
 	<!--照片瀑布 end-->
+	<script th:src="@{/js/every/globalJs.js}"></script>
+	<script th:src="@{/js/every/globalChat.js}"></script>
 	<script src="js/every/search.js"></script>
 </body>
 </html>

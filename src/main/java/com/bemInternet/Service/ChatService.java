@@ -14,7 +14,6 @@ public interface ChatService {
 	
 	public List<Chat> SaveMessageState(String inputUser, String outputUser);
 	
-	public List<String> QueryMessageState(String outputname);
+	public List<Chat> QueryMessageState(String outputname);
 	
-	public List<String> QueryMessageStateNull(String outputname);
 }

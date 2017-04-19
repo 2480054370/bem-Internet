@@ -1,6 +1,7 @@
 package com.bemInternet.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bemInternet.Service.ChatService;
 import com.bemInternet.Service.UserService;
+import com.bemInternet.domain.Chat;
 import com.bemInternet.form.UserConfigInfoForm;
 import com.bemInternet.form.UserConfigMsgForm;
 import com.bemInternet.form.UserRegisterForm;
@@ -31,11 +34,16 @@ public class UserConfigController extends BaseController{
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private ChatService chatService;
+	
 	@GetMapping("/config")
 	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public String Config(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		user = userService.findUserByStudentld(auth.getName());
+		List<Chat> message = chatService.QueryMessageState(auth.getName());
+		model.addAttribute("message", message);
 		model.addAttribute("user", user);
 		return "myConfig";
 	}

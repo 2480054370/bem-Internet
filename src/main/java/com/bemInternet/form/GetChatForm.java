@@ -5,6 +5,9 @@ public class GetChatForm {
     private String outputname;
     private String message;
     private String state;
+    private String outputUsername;
+    private String inputUsername;
+    private String outputImg;
 	public String getInputname() {
 		return inputname;
 	}
@@ -28,6 +31,24 @@ public class GetChatForm {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	public String getOutputUsername() {
+		return outputUsername;
+	}
+	public void setOutputUsername(String outputUsername) {
+		this.outputUsername = outputUsername;
+	}
+	public String getInputUsername() {
+		return inputUsername;
+	}
+	public void setInputUsername(String inputUsername) {
+		this.inputUsername = inputUsername;
+	}
+	public String getOutputImg() {
+		return outputImg;
+	}
+	public void setOutputImg(String outputImg) {
+		this.outputImg = outputImg;
 	}
     
     

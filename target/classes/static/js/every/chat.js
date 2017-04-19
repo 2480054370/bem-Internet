@@ -8,6 +8,10 @@ var message = null;
 var stompClient = null;
 var outputImg = null;
 var inputImg = null;
+var inputUsername = null;
+var outputUsername = null;
+var outputImg = null;
+
 
 window.onload = function() {
 	
@@ -21,41 +25,14 @@ window.onload = function() {
     	  if(data.unreadUser == ""){
 
     	  }else{
-    		  var unread = null;
-	    	  for(var item in data.unreadUser){
-	    		  if(unread == data.unreadUser[item]){
-	    			  continue;
-	    		  }else{
-	    			  unread = data.unreadUser[item];
-			    	  for(var i = 0; i < $('.lv-item.media.user').size(); i++){
-			  				if($('.lv-item.media.user:eq('+ i +')').find(".hidden_text").text() == unread){
-			      				$('.lv-item.media.user:eq('+ i +')').addClass("unread");
-			      				break;
-			      			}
-			  			}
-	    		  }
-	    	  }
+	    		unread = data.unreadUser;
+			    for(var i = 0; i < $('.lv-item.media.user').size(); i++){
+			  		if($('.lv-item.media.user:eq('+ i +')').find(".hidden_text").text() == unread){
+			  			$('.lv-item.media.user:eq('+ i +')').addClass("unread");
+			      			break;
+			      		}
+			    }
     	  }
-    	  
-    	  if(data.unreadUserNull == ""){
-
-    	  }else{
-    		  var unread = null;
-	    	  for(var item in data.unreadUserNull){
-	    		  if(unread == data.unreadUserNull[item]){
-	    			  continue;
-	    		  }else{
-	    			  unread = data.unreadUserNull[item];
-			    	  for(var i = 0; i < $('.lv-item.media.user').size(); i++){
-			  				if($('.lv-item.media.user:eq('+ i +')').find(".hidden_text").text() == unread){
-			      				$('.lv-item.media.user:eq('+ i +')').addClass("unread");
-			      				break;
-			      			}
-			  			}
-	    		  }
-	    	  }
-    	  }
-    	  
     	  
     	  if(data.outputname != "null"){
     		  outputname = data.outputname;
@@ -85,7 +62,7 @@ function sendName() {
     $('textarea[type="text"]').val('');
     
 	
-	  $.post("/chat_check",{"inputname" : thisUser, "outputname" : outputname, "message" : message, "state" : "-2"},function(data){
+	  $.post("/chat_check",{"inputname" : thisUser, "outputname" : outputname, "outputUsername" : outputUsername, "inputUsername" : inputUsername, "outputImg" : outputImg, "message" : message, "state" : "-1"},function(data){
     	  if(data.msg == "success"){
     			 $.globalMessenger().post({
     		            message: "发送成功",
@@ -120,7 +97,7 @@ function WebsocketInit(){
     			state = "-1";
     			for(var i = 0; i < $('.lv-item.media.user').size(); i++){
     				if($('.lv-item.media.user:eq('+ i +')').find(".hidden_text").text() == obj.Inname){
-        				$('.lv-item.media.user:eq('+ i +')').addClass("unread");
+    					$('.lv-item.media.user:eq('+ i +')').addClass("unread");
         				break;
         			}
     			}
@@ -143,7 +120,9 @@ $('.listview.lv-user').click(function(e){
 });
 
 function getMessage(){
-	var outputUsername = $(this).find(".outUsername").text();
+	inputUsername = $(".myname").text();
+	outputUsername = $("*[name="+outputname+"]").closest('.listview.lv-user').find(".outUsername").text();
+	outputImg = $("#outputImg").text();
 	$('textarea[type="text"]').focus();
 	$('.lv-item.media.user.active').removeClass("active");
 	$("*[name="+outputname+"]").closest('.listview.lv-user').find(".lv-item.media.user.unread").removeClass("unread");

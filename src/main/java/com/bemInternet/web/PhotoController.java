@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bemInternet.Service.ChatService;
 import com.bemInternet.Service.PhotoService;
 import com.bemInternet.Service.UserService;
+import com.bemInternet.domain.Chat;
 import com.bemInternet.domain.ClassPhoto;
 import com.bemInternet.domain.User;
 import com.bemInternet.utils.FileUploadUtils;
@@ -49,6 +50,9 @@ public class PhotoController extends BaseController{
 	@Autowired
 	private PhotoService photoService;
 	
+	@Autowired
+	private ChatService chatService;
+	
 	
 	@GetMapping("/classPhoto")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
@@ -64,6 +68,8 @@ public class PhotoController extends BaseController{
         String datetoday = formatter.format(date);
         model.addAttribute("date",datetoday);
 		model.addAttribute("list",list);
+		List<Chat> message = chatService.QueryMessageState(auth.getName());
+		model.addAttribute("message", message);
 		
 		return "classPhoto";
 	}

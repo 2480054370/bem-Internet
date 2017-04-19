@@ -60,7 +60,7 @@ public class ChatRoomController extends BaseController{
     }
     
     /**
-     * 班级成员加载聊天界面
+     * 其他页面加载聊天界面
      * @param model
      * @param getchat
      * @return
@@ -87,11 +87,13 @@ public class ChatRoomController extends BaseController{
 			map.put("noLogin", "noLogin");
 		}else{
 		map.put("thisUser", user.getStudentld());
-		List<String> unreadUser = chatService.QueryMessageState(user.getStudentld());
-		List<String> unreadUserNull = chatService.QueryMessageStateNull(user.getStudentld());
-		map.put("unreadUser", unreadUser);
-		map.put("unreadUserNull", unreadUserNull);
-		map.put("msgTotal", unreadUser.size() + unreadUserNull.size());
+		List<Chat> unreadUser = chatService.QueryMessageState(user.getStudentld());
+		if(unreadUser.isEmpty()){
+			map.put("unreadUser", "");
+		}else{
+			map.put("unreadUser", unreadUser.get(0).getInputname());
+		}
+		map.put("msgTotal", unreadUser.size());
 		if(receiver != null){
 			map.put("outputname", receiver);
 		}else{
@@ -123,6 +125,9 @@ public class ChatRoomController extends BaseController{
 		message.setMessage(getchat.getMessage());
 		message.setSendtime(df.format(date));
 		message.setState(getchat.getState());
+		message.setInputusername(getchat.getInputUsername());
+		message.setOutputusername(getchat.getOutputUsername());
+		message.setOutputImg(getchat.getOutputImg());
 		chatService.SaveChat(message);
 		map.put("msg", "success");
 		map.put("inputname", getchat.getInputname());
