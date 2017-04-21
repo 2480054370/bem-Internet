@@ -81,13 +81,14 @@
               <div class="lv-body">
                 <div class="myInfo">
                   <div class="myphoto"> 
-                    <div class="userhead" data-type="update_avatar">
+                    <div class="userhead" data-type="update_avatar"> 
                       <a th:href="@{/profile}" style="display:block;">
 	                      <img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${users.headimgfile}__}" alt="">
                       </a>
                     </div>
                   </div>
                   <div class="myshow">
+                    <div class="studentld" hidden="hidden"><span th:text="${users.studentld}"></span></div>
                     <div class="myname"><span th:text="${users.username}"></span></div>
                     <div class="Email"><span th:text="${users.usermail}"></span></div>
                     <div class="signature"><span th:text="${users.saying}"></span></div>
@@ -633,6 +634,8 @@
 	<script th:src="@{js/classPhoto/main.js}"></script>
 	<script th:src="@{js/classPhoto/other.js}"></script>
 	<!--照片瀑布 end-->
+	<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+    <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
 	<script th:src="@{/js/every/globalJs.js}"></script>
 	<script th:src="@{/js/every/globalChat.js}"></script>
 	<script src="js/every/search.js"></script>

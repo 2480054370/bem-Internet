@@ -45,12 +45,12 @@
 			<li class="pull-right">
 				<ul class="top-menu">
 					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
-										<li class="dropdown" id="info-btn">
+					<li class="dropdown" id="info-btn">
 						<a href="javascript:void(0);">
 							<i class="material-icons">notifications</i>
 						</a>
 						<div class="dropdown-menu dropMenu pull-right" id="info">
-							<div class="lv-header">消息提醒</div>
+							<div id="msgRemind" class="lv-header">消息提醒</div>
               <div id="msgNotice" class="lv-body" th:if="${not #lists.isEmpty(message)}" th:each="listmsg:${message}">               
                 <a class="lv-item" th:href="@{/load_chatRoom/{studentld}(studentld=${listmsg.inputname})}">
                   <div class="media">
@@ -142,9 +142,8 @@
 				</ol>				
 				<!-- <a href="javascript:void(0)" class="btn btn-info party-launch-btn pull-right">发表留言</a> -->
 			</div><!--block-header end-->
-
-			<div class="member-main" th:each="post:${posts}">
-				<div class="col-md-3 col-sm-4 col-xs-6">
+			<div class="row">
+				<div class="member-main col-md-3 col-sm-4 col-xs-6" th:each="post:${posts}">
 					<div class="item">
 						<div class="item-head">
 							<a th:href="@{/oProfile/{studentld}(studentld=${post.studentld})}">
@@ -158,8 +157,8 @@
 						</div><!--item-info end-->
 						<div class="item-footer"><a th:href="@{/load_chatRoom/{studentld}(studentld=${post.studentld})}" class="withripple">发消息</a></div>
 					</div><!--item end-->
-				</div><!--col-md-3 end-->
-			</div><!--member-main end-->
+				</div><!--member-main end-->
+			</div>
 		</div><!--container end-->
 		<!---------- main in here  end---------->
 	</div><!--main end-->
@@ -196,6 +195,8 @@
 		jQuery(".slideTxtBox").slide({effect:"top",autoPlay:true,delayTime:2000});
 		jQuery(".NoticeInfo").slide({effect:"fold",autoPlay:true});
 	</script>
+	<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+    <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
 	<script th:src="@{/js/every/globalJs.js}"></script>
 	<script th:src="@{/js/every/globalChat.js}"></script>
 	<script src="js/every/members.js"></script>

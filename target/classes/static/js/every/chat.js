@@ -13,7 +13,7 @@ var outputUsername = null;
 var outputImg = null;
 
 
-window.onload = function() {
+$(document).ready(function(){
 	
 	  $._messengerDefaults = {
 				extraClasses: 'messenger-fixed messenger-theme-future messenger-on-top'
@@ -40,8 +40,8 @@ window.onload = function() {
     	  }
 		  });
 	
-	WebsocketInit();
-};
+	//WebsocketInit();
+});
 
 $(function () {
     $("form").on('submit', function (e) {
@@ -57,12 +57,12 @@ $(function () {
 
 function sendName() {
 	$('.lv-item.media.chat:last').after('<div class="lv-item media chat right"><div class="lv-avatar pull-right"><img src="http://oihey4yi1.bkt.clouddn.com/'+ inputImg +'" alt=""></div><div class="media-body"><div class="ms-item">' + message + '</div></div></div>');
-    stompClient.send("/app/" + "sendChat", {}, JSON.stringify({'inputname': thisUser, 'outputname' : outputname, 'message' : message}));
+    stompClient.send("/app/" + "sendChat", {}, JSON.stringify({'inputname': thisUser, 'outputname' : outputname, 'message' : message, 'outputImg' : inputImg, "inputUsername" : inputUsername }));
     $('.lv-body.chat').scrollTop( $('.lv-body.chat')[0].scrollHeight );
     $('textarea[type="text"]').val('');
     
 	
-	  $.post("/chat_check",{"inputname" : thisUser, "outputname" : outputname, "outputUsername" : outputUsername, "inputUsername" : inputUsername, "outputImg" : outputImg, "message" : message, "state" : "-1"},function(data){
+	  $.post("/chat_check",{"inputname" : thisUser, "outputname" : outputname, "outputUsername" : outputUsername, "inputUsername" : inputUsername, "outputImg" : inputImg, "message" : message, "state" : "-1"},function(data){
     	  if(data.msg == "success"){
     			 $.globalMessenger().post({
     		            message: "发送成功",
@@ -79,7 +79,7 @@ function sendName() {
 		  });
 }
 
-function WebsocketInit(){
+/*function WebsocketInit(){
     var socket = new SockJS('/websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
@@ -107,7 +107,7 @@ function WebsocketInit(){
         	
         });
     });
-}
+}*/
 
 $('.test').click(function(){
 	  $.post("/test",function(data){});

@@ -50,7 +50,7 @@
 							<i class="material-icons">notifications</i>
 						</a>
 						<div class="dropdown-menu dropMenu pull-right" id="info">
-							<div class="lv-header">消息提醒</div>
+							<div id="msgRemind" class="lv-header">消息提醒</div>
               <div id="msgNotice" class="lv-body" th:if="${not #lists.isEmpty(message)}" th:each="listmsg:${message}">               
                 <a class="lv-item" th:href="@{/load_chatRoom/{studentld}(studentld=${listmsg.inputname})}">
                   <div class="media">
@@ -88,7 +88,7 @@
                     </div>
                   </div>
                   <div class="myshow">
-                    <span class="studentld" th:text="${user.studentld}"></span>
+                    <div class="studentld" hidden="hidden"><span th:text="${user.studentld}"></span></div>
                     <div class="myname"><span th:text="${user.username}"></span></div>
                     <div class="Email"><span th:text="${user.usermail}"></span></div>
                     <div class="signature"><span th:text="${user.saying}"></span></div>
@@ -363,6 +363,8 @@
 		jQuery(".slideTxtBox").slide({effect:"top",autoPlay:true,delayTime:2000});
 		jQuery(".NoticeInfo").slide({effect:"fold",autoPlay:true});
 	</script>
+	<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+    <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
 	<script th:src="@{/js/every/globalJs.js}"></script>
 	<script th:src="@{/js/every/globalChat.js}"></script>
 </body>

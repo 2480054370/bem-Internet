@@ -88,6 +88,7 @@ public class ChatDao {
 			    builder.equal(root.get("outputname"), outputname)
 			);
 		criteria.where(builder.and( personRestriction, partnerRestriction ));
+		criteria.orderBy(builder.desc(root.get("id")));
 		List<Chat> list = entityManager.createQuery(criteria).getResultList();
 		return list;
 	}

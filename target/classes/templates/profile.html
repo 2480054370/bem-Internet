@@ -45,12 +45,12 @@
 			<li class="pull-right">
 				<ul class="top-menu">
 					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
-										<li class="dropdown" id="info-btn">
+					<li class="dropdown" id="info-btn">
 						<a href="javascript:void(0);">
 							<i class="material-icons">notifications</i>
 						</a>
 						<div class="dropdown-menu dropMenu pull-right" id="info">
-							<div class="lv-header">消息提醒</div>
+							<div id="msgRemind" class="lv-header">消息提醒</div>
               <div id="msgNotice" class="lv-body" th:if="${not #lists.isEmpty(message)}" th:each="listmsg:${message}">               
                 <a class="lv-item" th:href="@{/load_chatRoom/{studentld}(studentld=${listmsg.inputname})}">
                   <div class="media">
@@ -73,7 +73,7 @@
 					<!-- 登陆前 end-->
 					<!-- 登录后 -->
 					<li id="top-user-btn" th:if="${not #lists.isEmpty(user)}">
-						<div class="user-headimg"><img id="headimg2" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt=""></div>
+						<div class="user-headimg"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt=""></div>
 						<div class="dropdown-menu dropMenu pull-right" id="top-user">
               <div class="lv-header">
                 个人信息                  
@@ -83,11 +83,12 @@
                   <div class="myphoto"> 
                     <div class="userhead" data-type="update_avatar"> 
                       <a th:href="@{/profile}" style="display:block;">
-	                      <img id="headimg3" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt="">
+	                      <img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt="">
                       </a>
                     </div>
                   </div>
                   <div class="myshow">
+                    <div class="studentld" hidden="hidden"><span th:text="${user.studentld}"></span></div>
                     <div class="myname"><span th:text="${user.username}"></span></div>
                     <div class="Email"><span th:text="${user.usermail}"></span></div>
                     <div class="signature"><span th:text="${user.saying}"></span></div>
@@ -336,6 +337,8 @@
 	<script th:src="@{/js/change_head_img/cropper/cropper.min.js}"></script>
 	<script th:src="@{/js/change_head_img/sitelogo/sitelogo.js}"></script>
 	<!--change_head_img end-->
+	<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+    <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
 	<script th:src="@{/js/every/globalJs.js}"></script>
 	<script th:src="@{/js/every/globalChat.js}"></script>
 	<script th:src="@{/js/jquery.form.js}"></script>

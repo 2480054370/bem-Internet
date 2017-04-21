@@ -46,12 +46,12 @@ xmlns:th="http://www.thymeleaf.org">
 			<li class="pull-right">
 				<ul class="top-menu">
 					<li id="top-search"><a href="javascript:void(0);"><i class="material-icons">search</i></a></li>
-										<li class="dropdown" id="info-btn">
+					<li class="dropdown" id="info-btn">
 						<a href="javascript:void(0);">
 							<i class="material-icons">notifications</i>
 						</a>
 						<div class="dropdown-menu dropMenu pull-right" id="info">
-							<div class="lv-header">消息提醒</div>
+							<div id="msgRemind" class="lv-header">消息提醒</div>
               <div id="msgNotice" class="lv-body" th:if="${not #lists.isEmpty(message)}" th:each="listmsg:${message}">               
                 <a class="lv-item" th:href="@{/load_chatRoom/{studentld}(studentld=${listmsg.inputname})}">
                   <div class="media">
@@ -90,6 +90,7 @@ xmlns:th="http://www.thymeleaf.org">
                     </div>
                   </div>
                   <div class="myshow">
+                    <div class="studentld" hidden="hidden"><span th:text="${user.studentld}"></span></div>
                     <div class="myname"><span th:text="${user.username}"></span></div>
                     <div class="Email"><span th:text="${user.usermail}"></span></div>
                     <div class="signature"><span th:text="${user.saying}"></span></div>
@@ -420,6 +421,8 @@ xmlns:th="http://www.thymeleaf.org">
 	<!--bootstrap时间控件-->
 	<link rel="stylesheet" href="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
 	<script src="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+	<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+    <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
 	<script th:src="@{/js/every/globalJs.js}"></script>
 	<script th:src="@{/js/every/globalChat.js}"></script>
 	<script src="js/every/photo.js"></script>

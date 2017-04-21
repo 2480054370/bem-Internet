@@ -68,6 +68,8 @@ public class IndexController extends BaseController{
 	@PostMapping("/uploadAvatar")
 	public @ResponseBody Map<String, Object> handleFileUpload(
 			@RequestParam(value = "file", required = false) MultipartFile file) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		user = userService.findUserByStudentld(auth.getName());
 		Date date = new Date();
 		long time = date.getTime();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -100,6 +102,8 @@ public class IndexController extends BaseController{
 	@PostMapping("/uploadbanner")
 	public @ResponseBody Map<String, Object> uploadbanner(
 			@RequestParam(value = "file2", required = false) MultipartFile file) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		user = userService.findUserByStudentld(auth.getName());
 		Date date = new Date();
 		long time = date.getTime();
 		Map<String, Object> map = new HashMap<String, Object>();

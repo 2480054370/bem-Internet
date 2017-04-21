@@ -286,6 +286,7 @@ a{text-decoration: none !important; outline: none !important;}
 }
 #info,
 #top-user{
+	overflow: auto;
     width: 300px;
     -webkit-transform: scale(0);
     -ms-transform: scale(0);
@@ -408,7 +409,6 @@ a{text-decoration: none !important; outline: none !important;}
     margin-bottom: 10px;
 }
 .dropMenu .lv-body {
-    min-height: 295px;
     max-height: 295px;
     overflow-x: hidden;
     overflow-y: auto;

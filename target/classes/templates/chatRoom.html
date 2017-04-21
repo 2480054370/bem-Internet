@@ -53,32 +53,21 @@
 							<i class="material-icons">notifications</i>
 						</a>
 						<div class="dropdown-menu dropMenu pull-right" id="info">
-							<div class="lv-header">消息提醒</div>
-              <div class="lv-body">                  
-                <a class="lv-item" href="javascript:void(0);">
+							<div id="msgRemind" class="lv-header">消息提醒</div>
+              <div id="msgNotice" class="lv-body" th:if="${not #lists.isEmpty(message)}" th:each="listmsg:${message}">               
+                <a class="lv-item" th:href="@{/load_chatRoom/{studentld}(studentld=${listmsg.inputname})}">
                   <div class="media">
                     <div class="pull-left">
-                      <img class="lv-img-sm" th:src="@{/images/1.jpg}" alt="">
+                      <img class="lv-img-sm" th:src="@{http://oihey4yi1.bkt.clouddn.com/__${listmsg.outputImg}__}" alt="">
                     </div>
                     <div class="media-body">
-                      <div class="lv-title">David Belle</div>
-                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
-                    </div>
-                  </div>
-                </a>
-                <a class="lv-item" href="javascript:void(0);">
-                  <div class="media">
-                    <div class="pull-left">
-                      <img class="lv-img-sm" th:src="@{/images/1.jpg}" alt="">
-                    </div>
-                    <div class="media-body">
-                      <div class="lv-title">David Belle</div>
-                      <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                      <div class="lv-title"><span th:text="${listmsg.inputusername}"></span></div>
+                      <small class="lv-small"><span th:text="${listmsg.message}"></span></small>
                     </div>
                   </div>
                 </a>
               </div>
-              <div style="overflow: hidden;"><a class="lv-footer" href="javascript:void(0);">所有消息</a></div>
+              <div style="overflow: hidden;"><a id="clearNotice" class="lv-footer" href="javascript:void(0);">全部已读</a></div>
 						</div><!--dropdown-menu end-->
 					</li>
 					<li class="hidden-xs chat-btn"><a href="javascript:void(0);" id="chat-btn"><i class="material-icons">comment</i></a></li>
@@ -103,6 +92,7 @@
                     </div>
                   </div>
                   <div class="myshow">
+                    <div class="studentld" hidden="hidden"><span th:text="${users.studentld}"></span></div>
                     <div class="myname"><span th:text="${users.username}"></span></div>
                     <div class="Email"><span th:text="${users.usermail}"></span></div>
                     <div class="signature"><span th:text="${users.saying}"></span></div>
@@ -222,7 +212,7 @@
 		    <div class="ms-menu">
 	        <div class="ms-block">
             <div class="ms-user">
-              <div class="img-div"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt=""></div>
+              <div class="lv-avatar img-div pull-left"><img th:src="@{http://oihey4yi1.bkt.clouddn.com/__${user.headimgfile}__}" alt=""></div>
               <div class="info">Signed in as <br> <span th:text=${user.usermail}></span></div>
             </div>
 	        </div><!--ms-block end-->
@@ -348,67 +338,69 @@
                 </ul>
               </div>
             </div><!--lv-header-alt end-->
-            <div class="lv-body chat">
-              <div class="lv-item media chat">
-<!--                 <div class="lv-avatar pull-left">
-                  <img src="images/tou.jpg" alt="">
-                </div>
-                <div class="media-body">
-                  <div class="ms-item">你好</div>
-                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 09:00</small>
-                </div> -->
-              </div><!--lv-item end-->
-              
-<!--               <div class="lv-item media right">
-                <div class="lv-avatar pull-right">
-                  <img src="images/tou.jpg" alt="">
-                </div>
-                <div class="media-body">
-                  <div class="ms-item">你好</div>
-                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 09:30</small>
-                </div>
-              </div>lv-item end
-              
-              <div class="lv-item media">
-                <div class="lv-avatar pull-left">
-                  <img src="images/tou.jpg" alt="">
-                </div>
-                <div class="media-body">
-                  <div class="ms-item">
-                      Etiam ex arcumentum
-                  </div>
-                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 09:33</small>
-                </div>
-              </div>lv-item end
-              
-              <div class="lv-item media right">
-                <div class="lv-avatar pull-right">
-                  <img src="images/tou.jpg" alt="">
-                </div>
-                <div class="media-body">
-                  <div class="ms-item">
-                      Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-                  </div>
-                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 10:10</small>
-                </div>
-              </div>lv-item end
-              
-              <div class="lv-item media">
-                <div class="lv-avatar pull-left">
-                  <img src="images/tou.jpg" alt="">
-                </div>
-                <div class="media-body">
-                  <div class="ms-item">
-                      Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam ac tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum elit massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae rhoncus sapien volutpat eget
-                  </div>
-                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 10:24</small>
-                </div>
-              </div>lv-item end -->
-            </div><!--lv-body end-->
-            <div class="lv-footer ms-reply">
-              <textarea type="text" placeholder=""></textarea>
-              <button id = "send"><i class="material-icons">send</i></button>
-            </div><!--lv-footer end-->
+            <div class="lv-bottom">
+	            <div class="lv-body chat">
+	              <div class="lv-item media chat">
+	<!--                 <div class="lv-avatar pull-left">
+	                  <img src="images/tou.jpg" alt="">
+	                </div>
+	                <div class="media-body">
+	                  <div class="ms-item">你好</div>
+	                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 09:00</small>
+	                </div> -->
+	              </div><!--lv-item end-->
+	              
+	<!--               <div class="lv-item media right">
+	                <div class="lv-avatar pull-right">
+	                  <img src="images/tou.jpg" alt="">
+	                </div>
+	                <div class="media-body">
+	                  <div class="ms-item">你好</div>
+	                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 09:30</small>
+	                </div>
+	              </div>lv-item end
+	              
+	              <div class="lv-item media">
+	                <div class="lv-avatar pull-left">
+	                  <img src="images/tou.jpg" alt="">
+	                </div>
+	                <div class="media-body">
+	                  <div class="ms-item">
+	                      Etiam ex arcumentum
+	                  </div>
+	                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 09:33</small>
+	                </div>
+	              </div>lv-item end
+	              
+	              <div class="lv-item media right">
+	                <div class="lv-avatar pull-right">
+	                  <img src="images/tou.jpg" alt="">
+	                </div>
+	                <div class="media-body">
+	                  <div class="ms-item">
+	                      Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus et magnis dis parturient montes,
+	                  </div>
+	                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 10:10</small>
+	                </div>
+	              </div>lv-item end
+	              
+	              <div class="lv-item media">
+	                <div class="lv-avatar pull-left">
+	                  <img src="images/tou.jpg" alt="">
+	                </div>
+	                <div class="media-body">
+	                  <div class="ms-item">
+	                      Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam ac tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum elit massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae rhoncus sapien volutpat eget
+	                  </div>
+	                  <small class="ms-date"><i class="material-icons">access_time</i> 2016.11.09 10:24</small>
+	                </div>
+	              </div>lv-item end -->
+	            </div><!--lv-body end-->
+	            <div class="lv-footer ms-reply">
+	              <textarea type="text" placeholder=""></textarea>
+	              <button id = "send"><i class="material-icons">send</i></button>
+	            </div><!--lv-footer end-->
+            </div>
 	        </div><!--listview end-->
 		    </div><!--ms-body end-->
 			</div><!--messages-main end-->

@@ -1314,11 +1314,10 @@ input::-webkit-outer-spin-button {-webkit-appearance: none;}
     padding: 7px 5px 7px 15px;
     font-size: 11px;
 }
-.listview {position: relative;}
+.listview {position: relative; min-height: 40px;}
 #messages-main .ms-menu .lv-item {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding: 10px 20px;
+	padding: 10px 20px 22px;
+    height: 50px;
 }
 #messages-main .ms-menu .lv-item.active {background: #fff;}
 #messages-main .ms-menu .lv-item.unread:before{
@@ -1367,6 +1366,7 @@ input::-webkit-outer-spin-button {-webkit-appearance: none;}
     width: 100%;
 }
 #messages-main .ms-menu {
+	overflow: auto;
     position: absolute;
     left: 0;
     top: 0;
@@ -1408,7 +1408,7 @@ input::-webkit-outer-spin-button {-webkit-appearance: none;}
 #ms-menu-trigger .line-wrap .line {background-color: #717171;}
 #messages-main .line-wrap .line.center {margin: 3px 0;}
 #messages-main .lv-message .lv-body{
-    max-height: 585px;
+    height: 585px;
     overflow: auto;
 }
 #messages-main .lv-message .lv-item.right {text-align: right;}

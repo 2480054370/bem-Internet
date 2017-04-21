@@ -1,8 +1,10 @@
 /**
  * 设置全局消息显示
  */
-window.onload = function() {
-	  thisUser = $('.studentld').text();
+
+
+
+$(document).ready(function(){
 	  $.post("/initialization",function(data){
     	  
     	  if(data.unreadUser == ""){
@@ -13,7 +15,7 @@ window.onload = function() {
       		  $('#info-btn').find('.material-icons').after('<span class="tmn-counts">' + data.msgTotal + '</span>')
     	  	}
 		  });
-};
+});
 
 $('#clearNotice').on("click", function(){
 	$('#msgNotice').empty();
@@ -23,6 +25,7 @@ $('#clearNotice').on("click", function(){
 	 */
 	/**
 	 * ****** --- over
-	 * ******新增消息提醒
+	 * ****** --- over
+	 * ****** --- over
 	 */
 });

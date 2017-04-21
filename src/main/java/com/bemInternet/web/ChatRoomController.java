@@ -110,6 +110,8 @@ public class ChatRoomController extends BaseController{
         map.put("Inname", message.getInputname());
         map.put("Ouname", message.getOutputname());
         map.put("message", message.getMessage());
+        map.put("inputImge", message.getOutputImg());
+        map.put("inputUsername", message.getInputUsername());
         this.simpMessagingTemplate.convertAndSend("/topic/" + message.getOutputname(), map);
     }
 //    
