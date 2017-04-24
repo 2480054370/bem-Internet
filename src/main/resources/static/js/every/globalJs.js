@@ -41,9 +41,9 @@ $(document).ready(function(){
 				
 				//更新消息内容
 				if($('#msgNotice').length > 0){
-					$('#msgNotice:first').before('<div id="msgNotice" class="lv-body"><a class="lv-item" href="/load_chatRoom/'+ obj.Inname +'"><div class="media"><div class="pull-left"><img class="lv-img-sm" src="http://oihey4yi1.bkt.clouddn.com/'+ obj.inputImge +'" alt=""></div><div class="media-body"><div class="lv-title"><span>'+ obj.inputUsername +'</span></div><small class="lv-small"><span>'+ obj.message +'</span></small></div></div></a></div>');
+					$('#msgNotice:first').before('<div class="lv-body msgNotice"><a class="lv-item" href="/load_chatRoom/'+ obj.Inname +'"><div class="media"><div class="pull-left"><img class="lv-img-sm" src="http://oihey4yi1.bkt.clouddn.com/'+ obj.inputImge +'" alt=""></div><div class="media-body"><div class="lv-title"><span>'+ obj.inputUsername +'</span></div><small class="lv-small"><span>'+ obj.message +'</span></small></div></div></a></div>');
 				}else{
-					$('#msgRemind').after('<div id="msgNotice" class="lv-body"><a class="lv-item" href="/load_chatRoom/'+ obj.Inname +'"><div class="media"><div class="pull-left"><img class="lv-img-sm" src="http://oihey4yi1.bkt.clouddn.com/'+ obj.inputImge +'" alt=""></div><div class="media-body"><div class="lv-title"><span>'+ obj.inputUsername +'</span></div><small class="lv-small"><span>'+ obj.message +'</span></small></div></div></a></div>');
+					$('#msgRemind').after('<div class="lv-body msgNotice"><a class="lv-item" href="/load_chatRoom/'+ obj.Inname +'"><div class="media"><div class="pull-left"><img class="lv-img-sm" src="http://oihey4yi1.bkt.clouddn.com/'+ obj.inputImge +'" alt=""></div><div class="media-body"><div class="lv-title"><span>'+ obj.inputUsername +'</span></div><small class="lv-small"><span>'+ obj.message +'</span></small></div></div></a></div>');
 				}
 			}
     	

@@ -1417,6 +1417,12 @@ input::-webkit-outer-spin-button {-webkit-appearance: none;}
     background: #ffc107;
     color: #fff;
 }
+.header-notice{
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 @media (min-width: 768px){
     #messages-main .ms-item {max-width: 70%;}
 }

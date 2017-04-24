@@ -18,11 +18,12 @@ $(document).ready(function(){
 });
 
 $('#clearNotice').on("click", function(){
-	$('#msgNotice').empty();
+	$('.msgNotice').remove();
 	$('.tmn-counts').remove();
 	/**
 	 * 这里写清空后台
 	 */
+	$.post("/clear_unread",function(data){});
 	/**
 	 * ****** --- over
 	 * ****** --- over

@@ -52,7 +52,7 @@ xmlns:th="http://www.thymeleaf.org">
 						</a>
 						<div class="dropdown-menu dropMenu pull-right" id="info">
 							<div id="msgRemind" class="lv-header">消息提醒</div>
-              <div id="msgNotice" class="lv-body" th:if="${not #lists.isEmpty(message)}" th:each="listmsg:${message}">               
+              <div class="lv-body msgNotice" th:if="${not #lists.isEmpty(message)}" th:each="listmsg:${message}">               
                 <a class="lv-item" th:href="@{/load_chatRoom/{studentld}(studentld=${listmsg.inputname})}">
                   <div class="media">
                     <div class="pull-left">
@@ -65,7 +65,7 @@ xmlns:th="http://www.thymeleaf.org">
                   </div>
                 </a>
               </div>
-              <div style="overflow: hidden;"><a id="clearNotice" class="lv-footer" href="javascript:void(0);">全部已读</a></div>
+              <div class="header-notice"><a id="clearNotice" class="lv-footer" href="javascript:void(0);">全部已读</a></div>
 						</div><!--dropdown-menu end-->
 					</li>
 					<li class="hidden-xs chat-btn"><a href="javascript:void(0);" id="chat-btn"><i class="material-icons">comment</i></a></li>

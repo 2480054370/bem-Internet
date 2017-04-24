@@ -158,6 +158,19 @@ public class ChatRoomController extends BaseController{
 		map.put("msg", "success");
 		return map;
     }
+    
+    @PostMapping("/clear_unread")
+    public @ResponseBody Map<String, Object> clearUnread(){
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		user = userService.findUserByStudentld(auth.getName());
+		List<Chat> unreadUser = chatService.QueryMessageState(user.getStudentld());
+		for(Chat item : unreadUser){
+			item.setState("1");
+			chatService.SaveChat(item);
+		}
+    	Map<String,Object> map = new HashMap<String,Object>();
+		return map;
+    }
 //    
 //    //测试添加好友方法
 //    @RequestMapping(value = "/test")
