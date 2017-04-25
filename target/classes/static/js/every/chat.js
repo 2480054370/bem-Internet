@@ -52,6 +52,14 @@ $(function () {
     	$('textarea[type="text"]').focus();
     	sendName(); 
     });
+    //添加键盘事件
+	$(document).keydown(function(e){
+	    if(e.which == 13 && e.ctrlKey){
+	    	message = $('textarea[type="text"]').val();
+	    	$('textarea[type="text"]').focus();
+	    	sendName(); 
+	   }
+	});
 });
 
 

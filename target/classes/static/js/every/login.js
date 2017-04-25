@@ -2,7 +2,23 @@
  * login 
  */
 
+
 $(document).ready(function() {
+	
+//	//添加键盘事件
+//    $(document).keyup(function(event){
+//  	  if(event.keyCode == 13){
+//  		  if($("*[name='login_Form']").hasClass('form_toggle')){
+//  			  	login();
+//  			}else if ($("*[name='register_Form']").hasClass('form_toggle')){
+//  				register();
+//  			}else if ($("*[name='forget_Form']").hasClass('form_toggle')){
+//  				forgetpwd();
+//  			}else if ($("*[name='change_password_Form']").hasClass('form_toggle')){
+//  				updatepwd();
+//  			}
+//  	  }
+//  	});
 	
 	$._messengerDefaults = {
 			extraClasses: 'messenger-fixed messenger-theme-future messenger-on-top'
@@ -21,33 +37,13 @@ $(document).ready(function() {
 		$(".card-signup").removeClass("form_toggle");
 		$("[name='forget_Form']").addClass("form_toggle");
 	})
-/*	$(document).on("click", "[name='change_password']", function(){
-		if($("[name='success']").hasClass("has-success")){
-			$(".card-signup").removeClass("form_toggle");
-			$("[name='change_password_Form']").addClass("form_toggle");
-		}
-		else{
-			event.stopPropagation();
-		}
-	})*/
-
-  // 验证忘记密码发送短信
-
-/*  $('.forget_btn').click(function() {
-	  loadCodeCheck();
-    $('.forget_validate').bootstrapValidator('validate');
-  });*/
-
-//  $('.change_btn').click(function() {
-//	    $('.change_password_validate').bootstrapValidator('validate');
-//	  });
 
 
 });
 
 //numvalue numsum 来自initalize.js
 //注册
-$(".register_btn").click(function(){
+$(".register_btn").click(function register(){
 	$('.register_validate').bootstrapValidator('validate');
 	console.log(numvalue + "---" + numsum);
 	if(numvalue != numsum){
@@ -61,28 +57,6 @@ $(".register_btn").click(function(){
 		var url = $(this).parents("form").attr("action");
 		var data = $(this).parents("form").serialize();
 		$.post(url, data, function(data){
-/*			var json = $.parseJSON(result);
-			$.each(json, function(idx, obj){
-				if(obj.message == "success"){
-					$(".card-signup").removeClass("form_toggle");
-					$("[name='login_Form']").addClass("form_toggle");
-					$("*[name='register_Form']").find("input").val("");
-					 $.globalMessenger().post({
-				            message: "注册成功",
-				            hideAfter: 2,
-				            type: 'success',
-				            //showCloseButton: true
-				        });
-					 $(".register_validate").data('bootstrapValidator').resetForm();
-				}else{
-					 $.globalMessenger().post({
-				            message: obj.message,
-				            hideAfter: 2,
-				            type: 'error',
-				            //showCloseButton: true
-				        });
-				}
-			});*/
 			console.log(data.data)
 			if(data.data == "success"){
 				$(".card-signup").removeClass("form_toggle");
@@ -116,7 +90,7 @@ $(".register_btn").click(function(){
 });
 
 //登陆
-$(".login_btn").click(function(){
+$(".login_btn").click(function login(){
 	$('.login_validate').bootstrapValidator('validate');
 	if(numvalue != numsum){
 		 $.globalMessenger().post({
@@ -148,12 +122,9 @@ $(".login_btn").click(function(){
 			}
 		$(this).parents("form").ajaxSubmit(ajax_option);
 	}
-
-
 });
 
-
-$('.forget_btn').click(function() {
+$('.forget_btn').click(function forgetpwd() {
 	  $.post("/check_vercode",{"findemail" : $("*[name='forget_Form']").find("*[name='email']").val(), "vercode" : $("*[name='code']").val()},function(data){
     	  if(data.data == "success"){
     			 $.globalMessenger().post({
@@ -188,7 +159,7 @@ $('.forget_btn').click(function() {
 
 function updatepassword(account){
 	var upaccount = account;
-	$('.change_btn2').click(function() {
+	$('.change_btn2').click(function updatepwd() {
 		  $.post("/check_updatepwd",{"cuppwd" : $("#CUpPwd").val(), "cuprepwd" : $("#CUpRePwd").val(), "upaccount" : upaccount},function(data){
 	    	  if(data.data == "success"){
 	    			 $.globalMessenger().post({
@@ -207,7 +178,7 @@ function updatepassword(account){
 	    				$(".change_password_validate").data('bootstrapValidator').resetForm();
 	    	  }else if(data.data == "error"){
 	    			 $.globalMessenger().post({
-	    		            message: "验证错误，请重新输入",
+	    		            message: "验证错误，请重新输入!!!",
 	    		            hideAfter: 2,
 	    		            type: 'error',
 	    		            //showCloseButton: true
